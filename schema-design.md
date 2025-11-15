@@ -57,4 +57,71 @@ CREATE TABLE admin (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Auto set update timestamp
 );
 ```
+## MongoDB Collection Design
+
+## Collection: prescriptions
+```json
+{
+  "_id": "ObjectId('64fcd123456')",
+  "patientId": "ObjectId('64fcd789012')",
+  "doctorId": "ObjectId('64fcd345678')",
+  "appointmentId": 51,
+  "medications": [
+    {
+      "name": "Paracetamol",
+      "dosage": "500mg",
+      "frequency": "1 tablet every 6 hours",
+      "duration": "7 days",
+      "instructions": "Take after meals",
+      "sideEffects": ["Nausea", "Dizziness"],
+      "warnings": ["Avoid alcohol"],
+      "refillCount": 2
+    },
+    {
+      "name": "Ibuprofen",
+      "dosage": "200mg",
+      "frequency": "1 tablet every 8 hours",
+      "duration": "5 days",
+      "instructions": "Take with water",
+      "sideEffects": ["Upset stomach"],
+      "refillCount": 1
+    }
+  ],
+  "doctorNotes": "Patient needs follow-up in 2 weeks to monitor pain levels.",
+  "tags": ["Pain Relief", "Fever", "NSAID"],
+  "status": "Active",
+  "metadata": {
+    "createdAt": "2025-11-15T10:30:00Z",
+    "updatedAt": "2025-11-16T12:00:00Z",
+    "createdBy": "Dr. Jane Doe"
+  },
+  "pharmacy": {
+    "name": "Walgreens SF",
+    "location": "Market Street, San Francisco",
+    "contact": {
+      "phone": "+1-800-555-1234",
+      "email": "contact@walgreens.com"
+    }
+  },
+  "attachments": [
+    {
+      "fileType": "PDF",
+      "fileName": "Prescription_John_Smith.pdf",
+      "url": "https://example.com/prescriptions/64fcd123456"
+    }
+  ],
+  "comments": [
+    {
+      "user": "Dr. Jane Doe",
+      "timestamp": "2025-11-15T10:45:00Z",
+      "message": "Monitor liver enzymes due to history of liver issues."
+    },
+    {
+      "user": "Pharmacy Support",
+      "timestamp": "2025-11-16T09:30:00Z",
+      "message": "Prescription processed and ready for pickup."
+    }
+  ]
+}
+```
 
