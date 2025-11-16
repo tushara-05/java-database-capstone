@@ -4,8 +4,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import java.util.List;
 
 @Document(collection = "prescriptions")
 public class Prescription {
@@ -13,19 +13,16 @@ public class Prescription {
     @Id
     private String id;
 
-    @NotNull
-    @Size(min = 3, max = 100)
+    @NotNull @Size(min = 3, max = 100)
     private String patientName;
 
     @NotNull
     private Long appointmentId;
 
-    @NotNull
-    @Size(min = 3, max = 100)
+    @NotNull @Size(min = 3, max = 100)
     private String medication;
 
-    @NotNull
-    @Size(min = 3, max = 20)
+    @NotNull @Size(min = 3, max = 20)
     private String dosage;
 
     @Size(max = 200)
