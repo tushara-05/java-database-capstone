@@ -1,10 +1,19 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(
+    name = "patients",
+    uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 public class Patient {
 
     @Id
@@ -17,8 +26,10 @@ public class Patient {
 
     @NotNull
     @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     @Size(min = 6)
     private String password;
@@ -40,6 +51,15 @@ public class Patient {
 
     @Size(max = 100)
     private String insuranceProvider;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -68,4 +88,10 @@ public class Patient {
 
     public String getInsuranceProvider() { return insuranceProvider; }
     public void setInsuranceProvider(String insuranceProvider) { this.insuranceProvider = insuranceProvider; }
+
+    public Gender getGender() { return gender; }
+    public void setGender(Gender gender) { this.gender = gender; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
