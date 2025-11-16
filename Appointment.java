@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "appointments")
 public class Appointment {
 
     @Id
@@ -23,8 +24,9 @@ public class Appointment {
     @Future(message = "Appointment time must be in the future")
     private LocalDateTime appointmentTime;
 
-    @NotNull
-    private Integer status;  // 0 = Scheduled, 1 = Completed
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AppointmentStatus status = AppointmentStatus.SCHEDULED;
 
     @Size(max = 255)
     private String reasonForVisit;
@@ -54,8 +56,8 @@ public class Appointment {
     public LocalDateTime getAppointmentTime() { return appointmentTime; }
     public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
 
-    public Integer getStatus() { return status; }
-    public void setStatus(Integer status) { this.status = status; }
+    public AppointmentStatus getStatus() { return status; }
+    public void setStatus(AppointmentStatus status) { this.status = status; }
 
     public String getReasonForVisit() { return reasonForVisit; }
     public void setReasonForVisit(String reasonForVisit) { this.reasonForVisit = reasonForVisit; }
