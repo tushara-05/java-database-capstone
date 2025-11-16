@@ -3,35 +3,55 @@ package com.project.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(
+    name = "admin",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+    }
+)
 public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "username cannot be null")
-    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+    @NotNull
+    @Size(min = 3, max = 50)
+    @Column(nullable = false, length = 50)
     private String username;
 
-    @NotNull(message = "password cannot be null")
-    @Size(min = 6, message = "Password must be at least 6 characters")
+    @NotNull
+    @Size(min = 6)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false)
     private String password;
 
-    @NotNull(message = "email cannot be null")
-    @Email(message = "Email must be valid")
+    @NotNull
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Size(max = 50)
-    private String role; // e.g., "SUPER_ADMIN", "STAFF"
+    private String role; // e.g., SUPER_ADMIN, STAFF
 
-    private LocalDateTime lastLogin; // Stores last login timestamp
+    private LocalDateTime lastLogin;
 
-    private Boolean active = true; // Account status
+    @Column(nullable = false)
+    private Boolean active = true;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -54,4 +74,7 @@ public class Admin {
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
