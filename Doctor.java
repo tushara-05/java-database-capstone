@@ -3,11 +3,17 @@ package com.project.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.Range;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(
+    name = "doctors",
+    uniqueConstraints = @UniqueConstraint(columnNames = "email")
+)
 public class Doctor {
 
     @Id
@@ -24,6 +30,7 @@ public class Doctor {
 
     @NotNull
     @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotNull
@@ -39,13 +46,21 @@ public class Doctor {
 
     @Min(1)
     @Max(5)
-    private Double rating;  // Rating between 1 and 5
+    private Double rating;
 
     @ElementCollection
     private List<String> availableTimes;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull
+    @Size(min = 6)
     private String password;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -77,4 +92,7 @@ public class Doctor {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
