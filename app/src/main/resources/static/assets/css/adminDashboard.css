@@ -27,7 +27,7 @@
   .main-content {
     flex: 1;
     padding: 20px;
-    background: url('../images/index.png') no-repeat center center;
+    background: url('../images/defineRole/index.png') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
   }
