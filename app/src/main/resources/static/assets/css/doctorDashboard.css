@@ -1,65 +1,163 @@
-/* This is the style sheet for the doctorDashboard.html */
-/* 
-**Table Header (`.table-header`)**
+/* Reset & Base Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-* Set font size to `24px` for clear emphasis.
-* Use a dark teal color (`#015c5d`) for consistency with the theme.
-* Add `30px` bottom margin and remove right margin.
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
 
-**Table Styling (`table`)**
+/* Wrapper & Layout */
+.container {
+  width: 100%;
+  min-height: 100vh;
+}
 
-* Make the table full width (`100%`).
-* Collapse borders for clean lines.
-* Use a `sans-serif` font.
-* Add `20px` top margin for spacing.
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-**Table Head (`thead`)**
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background: #f9f9f9;
+}
 
-* Set a very light dark background (`#33333310`) for header row.
-* Use white text color (`#fff`).
+/* Search Bar & Filters */
+#searchBar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-**Table Cells (`td, th`)**
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
 
-* Apply padding of `12px 16px` for spacing.
-* Center-align the text.
-* Add a subtle bottom border (`1px solid #ddd`).
+.filter-btn {
+  background: #015c5d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 
-**Table Row Styling**
+.filter-btn:hover {
+  background: #017d7e;
+}
 
-* Alternate row colors for better readability:
+#dateFilter {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-  * Even rows: semi-transparent light grey (`#f9f9f959`).
-  * Odd rows: soft white background (`#ffffffc0`).
-* On hover: highlight row with a light teal overlay (`#015c5d39`).
+/* Patient Table */
+#patientTable {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-**Prescription Button (`.prescription-btn`)**
+#patientTable thead {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
 
-* Set size to `30px x 30px`.
-* Make it interactive with a pointer cursor.
-* Add transition effects for scale and brightness on hover.
-* On hover:
+#patientTable thead th {
+  padding: 12px 10px;
+  text-align: left;
+}
 
-  * Slightly enlarge (`scale(1.1)`)
-  * Brighten appearance
-* On click: slightly shrink (`scale(0.95)`).
+#patientTable tbody tr {
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  transition: background 0.3s;
+}
 
-**No Record Message (`.noPatientRecord`)**
+#patientTable tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
 
-* Use a `16px` italic grey font to indicate no data gently.
+#patientTable tbody tr:hover {
+  background: #e6f7f7;
+}
 
-**Today Button (`.today-btn`)**
+#patientTable tbody td {
+  padding: 12px 10px;
+}
 
-* Add right margin (`10px`).
-* Add padding (`10px`).
-* Set background color to teal green (`#015c5d`).
+/* Prescription Button */
+.prescription-btn {
+  background: #015c5d;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
 
-**Date Picker (`.date-picker`)**
+.prescription-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
 
-* Add left margin (`10px`) and top margin (`13px`).
-* Round corners with `8px` radius.
-* Add padding (`10px`) and set fixed height (`30px`).
+/* No Patient Record Placeholder */
+.noPatientRecord {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 20px 0;
+}
 
----
+/* Responsive Design */
+@media (max-width: 768px) {
+  #searchBar, #dateFilter {
+    width: 100%;
+  }
 
-Let me know if you'd like a consolidated style guide for the entire HospitalCRM frontend.
- */
+  .filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #patientTable thead, #patientTable tbody, #patientTable th, #patientTable td, #patientTable tr {
+    display: block;
+  }
+
+  #patientTable thead {
+    display: none;
+  }
+
+  #patientTable tbody tr {
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  #patientTable tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+
+  #patientTable tbody td:last-child {
+    border-bottom: none;
+  }
+}
