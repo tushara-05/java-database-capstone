@@ -5,10 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="../assets/images/logo/logo.png" />
-    <title>PatientDashboard</title>
-    <link rel="stylesheet" href="../assets/css/adminDashboard.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/patientDashboard.css">
+    <title>Patient Dashboard</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/adminDashboard.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/patientDashboard.css" />
+
+    <!-- JS Utilities & Components -->
     <script src="../js/render.js" defer></script>
     <script src="../js/util.js" defer></script>
     <script src="../js/components/header.js" defer></script>
@@ -19,9 +23,17 @@
 <body onload="renderContent()">
     <div class="container">
         <div class="wrapper">
+
+            <!-- Header -->
             <div id="header"></div>
+
+            <!-- Main Content -->
             <main class="main-content">
+                
+                <!-- Search Bar -->
                 <input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
+
+                <!-- Filters -->
                 <div class="filter-wrapper">
                     <select class="filter-select" id="filterTime">
                         <option value="">Sort by Time</option>
@@ -46,17 +58,26 @@
                         <option value="General">General Physician</option>
                     </select>
                 </div>
+
+                <!-- Doctor Cards / Content -->
                 <div id="content"></div>
+
             </main>
+
+            <!-- Footer -->
             <div id="footer"></div>
         </div>
     </div>
+
+    <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <div id="modal-body"></div>
         </div>
     </div>
+
+    <!-- Page-specific JS -->
     <script type="module" src="../js/patientDashboard.js" defer></script>
 </body>
 
