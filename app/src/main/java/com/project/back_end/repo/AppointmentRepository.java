@@ -1,3 +1,55 @@
+Appointment Repository
+Next, you'll define custom query methods in AppointmentRepository to support advanced appointment search and filtering logic.
+
+Open the AppointmentRepository.java file.
+Open AppointmentRepository.java in IDE
+
+Create a repository for the Appointment model by extending JpaRepository. This will allow for basic CRUD operations without needing to implement the methods manually.
+
+Add the following methods:
+
+findByDoctorIdAndAppointmentTimeBetween: Retrieve appointments for a doctor within a given time range.
+
+Return type: List<Appointment>
+Parameters: Long doctorId, LocalDateTime start, LocalDateTime end
+Query: Use @Query with LEFT JOIN FETCH to include doctor and availability info
+findByDoctorIdAndPatient_NameContainingIgnoreCaseAndAppointmentTimeBetween: Filter appointments by doctor ID, partial patient name (case-insensitive), and time range.
+
+Return type: List<Appointment>
+Parameters: Long doctorId, String patientName, LocalDateTime start, LocalDateTime end
+Query: Use @Query with LEFT JOIN FETCH to include patient and doctor details
+deleteAllByDoctorId: Delete all appointments related to a specific doctor.
+
+Return type: void
+Parameter: Long doctorId
+Annotations: Use @Modifying and @Transactional to enable delete operation
+findByPatientId: Find all appointments for a specific patient.
+
+Return type: List<Appointment>
+Parameter: Long patientId
+findByPatient_IdAndStatusOrderByAppointmentTimeAsc: Retrieve appointments for a patient by status, ordered by appointment time.
+
+Return type: List<Appointment>
+Parameters: Long patientId, int status
+filterByDoctorNameAndPatientId: Search appointments by partial doctor name and patient ID.
+
+Return type: List<Appointment>
+Parameters: String doctorName, Long patientId
+Query: Use @Query with LOWER and CONCAT for case-insensitive partial matching
+filterByDoctorNameAndPatientIdAndStatus: Filter appointments by doctor name, patient ID, and status.
+
+Return type: List<Appointment>
+Parameters: String doctorName, Long patientId, int status
+Query: Use @Query with LOWER, CONCAT, and additional filtering on status
+
+Hint:
+
+Extend JpaRepository<Appointment, Long> for basic CRUD functionality.
+Use @Query for custom joins and filtering logic.
+Use @Modifying and @Transactional for delete operations.
+Leverage method naming conventions (e.g., findBy, filterBy) for additional queries.
+Use LOWER, CONCAT, and % for partial, case-insensitive text matches.
+
 package com.project.back_end.repo;
 
 public interface AppointmentRepository  {
