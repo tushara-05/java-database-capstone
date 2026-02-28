@@ -1,3 +1,70 @@
+adminDashboard.html (Thyemeleaf Code)
+In this section, you’ll build the main dashboard for Admin users. This page will serve as the control panel for managing doctors — allowing admins to view, add, delete, and filter doctor profiles.
+
+The page should include a search bar, dropdown filters (by specialty or time), and a dynamic list of doctor cards. You'll also add a modal popup for adding new doctors, which will be triggered by a button click.
+
+This layout will eventually be connected to your backend and populated using JavaScript services.
+
+Tips:
+The admin is validated first using token and userRole.
+Include modal forms for adding new doctors.
+
+HTML Code
+Open the HTML File:
+Open adminDashboard.html located at app/src/main/resources/templates/admin/adminDashboard.html.
+Open adminDashboard.html in IDE
+
+Add Basic HTML Structure:
+
+Use <!DOCTYPE html> and <html lang="en">.
+In the <head> tag, include:
+<meta charset="UTF-8">
+
+A <title> for the page (Admin Dashboard)
+
+CSS links for page-specific and global styles:
+
+ <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+ <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+JavaScript files with defer:
+
+Utility and rendering logic:
+
+<script th:src="@{/js/render.js}" defer></script>
+<script th:src="@{/js/util.js}" defer></script>
+
+Layout components:
+
+<script th:src="@{/js/components/header.js}" defer></script>
+<script th:src="@{/js/components/footer.js}" defer></script>
+
+Create Body Layout:
+
+Inside the <body>, structure the layout as follows:
+Wrap everything in <div class="container"> and then <div class="wrapper">.
+Insert <div id="header"></div> to load the dynamic header. header.js will provide a button labeled Add Doctor with a unique ID to trigger the modal.
+Create a <main class="main-content"> section containing:
+A search bar using <input type="text" id="searchBar" placeholder="search by doctor name" />
+A filter section with two <select> dropdowns for:
+Sorting by time
+Filtering by specialty
+A <div id="content"></div> to dynamically inject the list of doctors.
+Add <div id="footer"></div> for the dynamic footer.
+Add Modal for Adding Doctor:
+
+At the end of the <body>, add a hidden modal:
+<div id="modal" class="modal">
+  <span id="closeModal" class="close">&times;</span>
+  <div id="modal-body"></div>
+</div>
+
+Include JavaScript File:
+
+Just before the closing </body>, include the service script for admin dashboard and doctorCard:
+<script type="module" src="../js/services/adminDashboard.js" defer></script>
+<script type="module" src="../js/components/doctorCard.js" defer></script>
+
 <!-- adminDashboard.html -->
 
 <!-- 
