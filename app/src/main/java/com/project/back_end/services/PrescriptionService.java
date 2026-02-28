@@ -1,3 +1,30 @@
+Prescription Service
+The PrescriptionService class handles the creation and retrieval of prescriptions. It provides two key functionalities: saving a new prescription and retrieving an existing prescription based on an appointment ID.
+
+Here's a breakdown of the methods in this service:
+
+Open the PrescriptionService.java file.
+Open PrescriptionService.java in IDE
+
+1. savePrescription(Prescription prescription)
+Purpose
+Saves a prescription to the database
+Parameters
+Prescription prescription – The prescription object to be saved
+Return Type
+ResponseEntity<Map<String, String>> – Returns a response with a message indicating the result of the save operation
+Explanation
+The method attempts to save the prescription to the database using the prescriptionRepository. If successful, it returns a 201 Created status with a message "Prescription saved". If there is an error, it returns a 500 Internal Server Error with a generic error message.
+2. getPrescription(Long appointmentId)
+Purpose
+Retrieves the prescription associated with a specific appointment ID
+Parameters
+Long appointmentId – The appointment ID whose associated prescription is to be retrieved
+Return Type
+ResponseEntity<Map<String, Object>> – Returns a response containing the prescription details or an error message
+Explanation
+The method attempts to fetch the prescription from the database using the prescriptionRepository.findByAppointmentId(appointmentId) method. If successful, it returns the prescription as part of the response with a 200 OK status. If there is an error, it returns a 500 Internal Server Error with an error message.
+
 package com.project.back_end.services;
 
 public class PrescriptionService {
