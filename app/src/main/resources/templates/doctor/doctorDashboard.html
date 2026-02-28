@@ -1,3 +1,37 @@
+doctorDashboard.html (Thyemeleaf Code)
+Next, you’ll create the dashboard for Doctor users. This page is focused on patient management and appointment tracking.
+
+You’ll build a clean interface that includes a table to list patient records, filters for dates or appointment status, and buttons for adding prescriptions. This layout should be easy to scan and interact with, enabling doctors to manage their workload efficiently.
+
+HTML Code
+Open the HTML File:
+Open doctorDashboard.html located at app/src/main/resources/templates/doctor/doctorDashboard.html.
+Open doctorDashboard.html in IDE
+
+HTML Structure:
+
+Start with <!DOCTYPE html> and <html lang="en">.
+In the <head>, include:
+Standard meta tags and the page title "DoctorDashboard".
+Favicon link.
+Stylesheets: adminDashboard.css, doctorDashboard.css, style.css.
+Scripts:
+Utility files: render.js, util.js
+Components: header.js, footer.js, patientRows.js
+Services and main logic: patientServices.js, doctorDashboard.js
+Body Layout:
+
+Use <div class="container"> and wrap content inside <div class="wrapper">.
+Header is injected via <div id="header"></div>.
+Main dashboard includes:
+Search bar (<input type="text" id="searchBar" />)
+Filter section:
+“Today’s Appointments” button
+Date input for selecting other dates
+Patient records table:
+Use <table id="patientTable"> with columns: Patient ID, Name, Phone, Email, Prescription
+Body of the table is populated dynamically
+Footer is injected via <div id="footer"></div>
 <!-- doctorDashboard.html -->
 
 <!-- 
