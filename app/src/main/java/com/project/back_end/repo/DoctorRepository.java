@@ -1,3 +1,38 @@
+Doctor Repository
+you'll build the DoctorRepository interface to query doctors by name, email, and specialty using both conventions and custom queries.
+
+Open the DoctorRepository.java file.
+Open DoctorRepository.java in IDE
+
+Create a repository for the Doctor model by extending JpaRepository. This will allow for basic CRUD operations without needing to implement the methods manually.
+
+Add the following methods:
+
+findByEmail: Find a doctor by their email address.
+
+Return type: Doctor
+Parameter: String email
+findByNameLike: Find doctors by partial name match.
+
+Return type: List<Doctor>
+Parameter: String name
+Query: Use @Query with LIKE and CONCAT for flexible pattern matching
+findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase: Filter doctors by partial name and exact specialty (case-insensitive).
+
+Return type: List<Doctor>
+Parameters: String name, String specialty
+Query: Use @Query with LOWER, CONCAT, and LIKE for case-insensitive matching
+findBySpecialtyIgnoreCase: Find doctors by specialty, ignoring case.
+
+Return type: List<Doctor>
+Parameter: String specialty
+
+Hint:
+
+Extend JpaRepository<Doctor, Long> to inherit basic CRUD functionality.
+Use Spring Data naming conventions (e.g., findBy, Containing, IgnoreCase) for simple queries.
+Use @Query and LIKE with LOWER and CONCAT to support case-insensitive and partial matching.
+
 package com.project.back_end.repo;
 
 public interface DoctorRepository {
