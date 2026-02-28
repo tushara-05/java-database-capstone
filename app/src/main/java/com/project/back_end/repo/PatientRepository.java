@@ -1,3 +1,27 @@
+Patient Repository
+You'll now implement the repository interface to retrieve patients using their email or phone number for identification and validation.
+
+Open the PatientRepository.java file.
+Open PatientRepository.java in IDE
+
+Create a repository for the Patient model by extending JpaRepository. This will allow for basic CRUD operations without needing to implement the methods manually.
+
+Add the following methods:
+
+findByEmail: Find a patient by their email address.
+
+Return type: Patient
+Parameter: String email
+findByEmailOrPhone: Find a patient using either email or phone number.
+
+Return type: Patient
+Parameters: String email, String phone
+
+Hint:
+
+Extend JpaRepository<Patient, Long> to inherit basic CRUD functionality.
+Use Spring Data naming conventions to define compound query methods such as findByEmailOrPhone.
+    
 package com.project.back_end.repo;
 
 public interface PatientRepository {
