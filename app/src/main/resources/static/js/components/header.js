@@ -1,3 +1,103 @@
+Header.js
+This file defines a reusable header component that appears at the top of every page. It dynamically changes based on the user's role (admin, doctor, and patient) and login state. It improves code reusability and reduces duplication across multiple HTML files.
+
+You'll use JavaScript to insert navigation links, role selectors, and logout buttons depending on the context of the current page.
+
+Task:
+ Open header.js in IDE
+
+you will build a renderHeader() function that:
+
+Checks the current page.We don’t want to show the role-based header on the homepage
+
+HINT :
+
+    if (window.location.pathname.endsWith("/")) {
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("token");
+    }
+
+Looks at the user’s role and login token in localStorage ,to determine which header layout to show.
+
+HINT :
+
+    const role = localStorage.getItem("userRole");
+    const token = localStorage.getItem("token");
+
+Add the condition to check invalid handle button.
+
+HINT :
+
+    if ((role === "loggedPatient" || role === "admin" || role === "doctor") && !token) {
+      localStorage.removeItem("userRole");
+      alert("Session expired or invalid login. Please log in again.");
+      window.location.href = "/";
+      return;
+    }
+
+Injects the appropriate header HTML into the page.
+
+HINT :
+
+    if (role === "admin") {
+      headerContent += `
+        <button id="addDocBtn" class="adminBtn" onclick="openModal('addDoctor')">Add Doctor</button>
+        <a href="#" onclick="logout()">Logout</a>`;
+    }
+
+Repeat for :
+
+doctor ➜ Show “Home” and Logout
+patient ➜ Show “Login” and “Sign Up”
+loggedPatient ➜ Show “Home”, “Appointments”, and Logout
+Provides navigation buttons and logout functionality tailored to each user type.
+
+HINT :
+
+Start with an empty string: headerContent = ""
+If role is admin  
+  Add HTML string for "Add Doctor" button and Logout link
+If role is doctor  
+  Add "Home" button and Logout
+If role is patient  
+  Add Login and Signup buttons
+If role is loggedPatient  
+  Add Home, Appointments, and Logout
+
+Finalize Header Injection. This replaces the contents of the #header div with the generated HTML.
+
+HINT :
+
+    headerDiv.innerHTML = headerContent;
+    attachHeaderButtonListeners();
+
+Attach Event Listeners because elements were dynamically created, you need to attach listeners after insertion.
+
+Use document.getElementById(“someBtnId”)
+Check if the element exists (in case the button is not for all roles)
+Use .addEventListener(“click”, …) to attach a handler.
+
+HINT :
+
+After rendering the header  
+Find buttons by ID  
+Attach 'click' event listeners (e.g. to open a modal or clear storage)
+
+Implementing Logout Functionality for clearing the session and going back to the start
+
+Remove both token and userRole from localStorage.
+Redirect to homepage using window.location.href = "/".
+For patient we can retain their “role” as just patient, not loggedPatient, to show login/signup again.
+
+HINT:
+
+Create a function called logout  
+Inside it, remove token and userRole  
+Redirect to homepage
+Create logoutPatient function  
+Remove token  
+Set role back to "patient"  
+Redirect to patient dashboard
 /*
   Step-by-Step Explanation of Header Section Rendering
 
