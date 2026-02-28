@@ -1,3 +1,117 @@
+patientDashboard.js – Viewing & Filtering Doctors
+Open the JS File:
+Open patientDashboard.js located at: app/src/main/resources/static/js/patientDashboard.js
+Open patientDashboard.js in IDE
+
+Import Required Modules
+At the top of the file, import:
+
+createDoctorCard from ./components/doctorCard.js – for rendering doctor information cards.
+openModal from ./components/modals.js – for opening login/signup modals.
+getDoctors, filterDoctors from ./services/doctorServices.js – for retrieving doctor data.
+patientLogin, patientSignup from ./services/patientServices.js – for handling patient authentication.
+Load Doctor Cards on Page Load
+When the page loads:
+
+Call loadDoctorCards() inside a DOMContentLoaded event listener.
+
+This function:
+
+Calls getDoctors() to fetch the list of all available doctors.
+Clears any existing content inside the #content div.
+Iterates over the results and renders each doctor using createDoctorCard().
+Appends each card to the #content section.
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadDoctorCards();
+});
+
+Bind Modal Triggers for Login and Signup
+Add event listeners on:
+
+The Signup button (#patientSignup) → opens the patientSignup modal.
+The Login button (#patientLogin) → opens the patientLogin modal.
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("patientSignup");
+  if (btn) btn.addEventListener("click", () => openModal("patientSignup"));
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const loginBtn = document.getElementById("patientLogin");
+  if (loginBtn) loginBtn.addEventListener("click", () => openModal("patientLogin"));
+});
+
+Search and Filter Logic
+Set up listeners for:
+
+Search bar (#searchBar)
+Availability time filter (#filterTime)
+Specialty filter (#filterSpecialty)
+Each change triggers filterDoctorsOnChange().
+
+document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
+document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
+document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
+
+filterDoctorsOnChange() Function:
+Gathers values from all three filter/search inputs.
+Uses filterDoctors(name, time, specialty) to fetch filtered results.
+Clears the existing content.
+If doctors are found, renders them using createDoctorCard().
+If not, displays a fallback message.
+
+function filterDoctorsOnChange() {
+  ...
+  filterDoctors(name, time, specialty).then(response => {
+    ...
+    contentDiv.innerHTML = doctors.length > 0 ? renderedCards : "<p>No doctors found with the given filters.</p>";
+  });
+}
+
+Render Utility
+The renderDoctorCards(doctors) function is available for rendering a given list of doctors dynamically, used optionally by other modules.
+
+Handle Patient Signup
+The signupPatient() function is triggered on form submission:
+
+Collects user inputs (name, email, password, phone, address).
+
+Sends the data to the backend via patientSignup().
+
+On success:
+
+Shows an alert with a success message.
+Closes the modal and reloads the page.
+On failure: Shows an error message.
+
+window.signupPatient = async function () {
+  ...
+};
+
+Handle Patient Login
+The loginPatient() function is triggered on login form submission:
+
+Captures login credentials (email, password).
+
+Calls patientLogin() to authenticate.
+
+On success:
+
+Stores JWT token in localStorage.
+Redirects user to loggedPatientDashboard.html.
+On failure:
+
+Shows error alert.
+
+window.loginPatient = async function () {
+  ...
+};
+
+Notes
+Ensure all modal IDs (patientSignup, patientLogin) are properly assigned in HTML.
+All doctor fetching functions (getDoctors, filterDoctors) should be async/await-based for clean flow and error handling.
+Use createDoctorCard() to maintain consistent UI design across dashboards.
+Use fallback messages for empty search/filter results or API errors.
 // patientDashboard.js
 import { getDoctors } from './services/doctorServices.js';
 import { openModal } from './components/modals.js';
