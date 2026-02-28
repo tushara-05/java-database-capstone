@@ -1,3 +1,80 @@
+Token Service
+This section covers how to generate and validate JWT tokens to authenticate users securely across the application.
+
+Open the TokenService.java file.
+Open TokenService.java in IDE
+
+Create a service class to handle JWT token generation, extraction, and validation.
+
+Hint: Add @Component annotation above the class definition.
+Declare necessary repositories to be used as private.
+
+Example:
+
+private final AdminRepository adminRepository;
+private final DoctorRepository doctorRepository;
+private final PatientRepository patientRepository;
+
+Add the following logic:
+
+generateToken: This method generates a JWT token for a given user's identifier.
+
+Parameters
+
+String identifier: The unique identifier for the user — username for Admin, email for Doctor and Patient.
+Return Type
+
+String: The generated JWT token
+Hint: The method uses Jwts.builder() to create a JWT token. The token includes the user's identifier as the subject, the current date as the issued date, and sets an expiration of 7 days.
+
+extractIdentifier: This method extracts the identifier (subject) from a JWT token.
+
+Parameters
+
+String token: The JWT token from which the identifier is to be extracted
+Return Type
+
+String: The identifier extracted from the token
+Hint: The method parses the token using Jwts.parser() and extracts the subject (which can be email or username).
+
+validateToken: This method validates the JWT token for a given user type (admin, doctor, or patient).
+
+Parameters
+
+String token: The JWT token to be validated
+String user: The type of user (e.g., admin, doctor, patient)
+Return Type
+
+boolean:
+true if the token is valid for the specified user type.
+false if the token is invalid or expired.
+Hint: The method extracts the email from the token and checks if a corresponding user exists in the database. The validation checks depend on the provided user type (admin, doctor, or patient).
+
+getSigningKey: This method retrieves the signing key used for JWT token signing.
+
+Parameters
+
+None
+Return Type
+
+SecretKey: The key used for signing the JWT
+Hint: Uses the secret from the application configuration (application.properties) to generate a signing key using Keys.hmacShaKeyFor().
+
+Additional Hints
+generateToken Method
+
+This method is essential for generating a JWT token for authenticated users. The token includes an expiration time of 7 days, which you can adjust based on your application needs.
+extractIdentifier Method
+
+This method is useful for extracting the user identifier (email/username) from the JWT token. It allows identifying the user without additional data in the token.
+validateToken Method
+
+This method is used to validate the authenticity of the token. It checks if the token belongs to a valid user and whether the user exists in the database based on the user type (admin, doctor, or patient).
+getSigningKey Method
+
+This method provides the signing key for the JWT token generation. It ensures that the same key is used for both signing and verifying the token, enhancing security.
+
+
 package com.project.back_end.services;
 
 public class TokenService {
