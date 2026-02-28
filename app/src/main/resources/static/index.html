@@ -1,3 +1,63 @@
+index.html
+In this step, you’ll create the initial landing page where users can choose their role in the Clinic system — Admin, Doctor, or Patient. This page sets the stage for a personalized user experience by allowing the user to select their identity, which will be used to tailor the dashboard and access permissions.
+
+You'll include buttons for each role, and store the selected role in the browser's localStorage so it can be accessed on subsequent pages. Later, you'll also trigger login modals based on the selected role.
+
+Let's begin by creating the HTML layout and adding placeholders for the necessary scripts and components.
+
+HTML code
+Open the index.html file app/src/main/resources/static/index.html
+Open index.html in IDE
+
+Add the following basic HTML structure:
+
+Use <!DOCTYPE html> and <html lang="en">.
+Inside <head>, include:
+<meta charset="UTF-8">
+
+<title> for the page.
+
+Favicon <link rel="icon" ... />.
+
+CSS links (index.css, style.css).
+
+Example:
+
+   <link rel="stylesheet" href="./assets/css/index.css">
+   <link rel="stylesheet" href="./assets/css/style.css">
+
+JS links for utility (util.js, render.js) with defer keyword to avoid render-blocking i.e. defer allows the browser to keep parsing and rendering the HTML while it downloads the JS. .
+
+Example :
+
+   <script src="./js/util.js" defer></script>
+   <script src="./js/render.js" defer></script>
+
+JS links for components (header.js, footer.js).
+
+Example :
+
+   <script src="./js/components/header.js" defer></script>
+   <script src="./js/components/footer.js" defer></script>
+
+In the <body>, add the following content inside a <main> tag:
+
+Wrap the content inside a div with class name container <div class="container">.
+Inside the container div create another <div> with class name wrapper (<div class="wrapper">) to group the sections.
+Add placeholders for Header (<div id="header"></div>) and placeholder for Footer (<div id="footer"></div>).
+In <main class="main-content">, create:
+A heading in h2 tag : “Select Your Role”.
+Buttons for each role: Admin, Doctor, Patient.
+Use onclick for dynamic role selection.
+Also assign unique ids to these elements for easy DOM access in JavaScript.
+Add a modal that is hidden by default and appears when triggered by an event listener.
+
+Create a hidden modal <div id="modal" class="modal"> with:
+Close button (id="closeModal").
+Dynamic content area (id="modal-body").
+Include the JavaScript file at the end of the <body> or just before the <body> tag to ensure the DOM is fully loaded.
+
+Use <script type="module" src="../js/services/index.js" defer></script> to include the service for role selection and modal behavior.
 <!-- index.html -->
 <!-- 
 
