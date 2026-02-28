@@ -1,4 +1,27 @@
+Admin Controller
+The admin controller will handle login operations, validating credentials and issuing tokens to authorized users.
 
+Purpose: This controller handles the login functionality for the admin. It provides an endpoint for admin login validation.
+
+Open the AdminController.java file.
+Open AdminController.java in IDE
+
+Set Up the Controller Class
+Annotate the class with @RestController to designate it as a REST controller for handling HTTP requests.
+Use @RequestMapping("${api.path}" + "admin") to set the base URL path for all methods in this controller.
+Autowired Dependencies
+Autowire the necessary service.
+Service for handling the business logic, including admin validation
+Define the adminLogin Method
+Annotate this method with @PostMapping.
+The method should accept an Admin object in the request body.
+It should call validateAdmin method from Service to perform the admin login validation.
+Return the response from the validateAdmin method, which provides the result of the admin login validation.
+Response
+The method returns a ResponseEntity<Map<String, String>>.
+If the admin credentials are correct, the response will include a token.
+If the credentials are incorrect, the response will contain an error message.
+  
 package com.project.back_end.controllers;
 
 public class AdminController {
