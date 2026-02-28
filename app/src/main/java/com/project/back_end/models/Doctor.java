@@ -1,3 +1,39 @@
+Doctor model
+The Doctor model stores information about healthcare providers, including their contact details, medical specialty, and availability. This model is crucial for mapping appointments and verifying doctor credentials.
+
+Open the Doctor.java file
+src/main/java/com/project/back_end/models/Doctor.java
+Open Doctor.java in IDE
+
+Add the following attributes along with getters and setters:
+id: private Long – Auto-incremented primary key
+name: private String – Doctor's full name (required, 3–100 characters)
+specialty: private String – Medical specialty (required, 3–50 characters)
+email: private String – Valid email address (required, must match email format)
+password: private String – Password (required, at least 6 characters, write-only in JSON)
+phone: private String – Phone number (required, must be 10 digits)
+availableTimes: private List<String> – List of available time slots (Example: "09:00 -10:00")
+
+Hints
+Annotate the class with @Entity.
+Use the following annotations for validations:
+@NotNull
+@Size(min = 3, max = 100)
+@Email
+@Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
+
+For password, use:
+@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+Use @ElementCollection on availableTimes:
+@ElementCollection
+private List<String> availableTimes;
+Add getters and setters for all fields.
+
+Tasks
+Add detailed validations for fields
+Ensure that sensitive data is hidden from public APIs
+Structure time availability data using proper JPA techniques
 package com.project.back_end.models;
 
 public class Doctor {
