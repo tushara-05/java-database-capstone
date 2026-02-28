@@ -1,3 +1,33 @@
+Prescription model
+The Prescription model is a MongoDB document that stores medication instructions issued during appointments. It includes the patient's name, the referenced appointment, prescribed drugs, dosage, and optional notes from the doctor.
+
+Open the Prescription.java file
+src/main/java/com/project/back_end/models/Prescription.java
+Open Prescription.java in IDE
+
+Add the following attributes along with getters and setters:
+id: private String – Unique identifier for the prescription (MongoDB ID, auto-generated)
+patientName: private String – Patient's full name (required, 3–100 characters)
+appointmentId: private Long – Reference to the appointment entity's ID (required, must be a valid Long)
+medication: private String – Name of the medication (required, 3–100 characters)
+dosage: private String – Dosage details (required, 3–20 characters)
+doctorNotes: private String – Optional field for any notes from the doctor (max 200 characters)
+
+Hints
+Annotate the class with:
+@Document(collection = "prescriptions")
+Use @Id to mark the MongoDB _id field
+Use @NotNull and @Size on all required fields to enforce string length and non-null constraints:
+@Size(min = 3, max = 100)
+@Size(min = 3, max = 20)
+@Size(max = 200)
+Implement a constructor to initialize the most important fields for easy object creation
+Add standard getters and setters
+
+Tasks
+Design a MongoDB-compatible class with strict validation
+Define a flexible schema using Spring Data MongoDB
+Include metadata relevant to prescriptions, while keeping doctor notes optional
 package com.project.back_end.models;
 
 public class Prescription {
