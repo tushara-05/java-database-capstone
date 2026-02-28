@@ -1,3 +1,75 @@
+Patient Service
+The PatientService class handles various operations related to patients, such as creating a patient, fetching their appointments, and filtering those appointments based on specific conditions (for example, past, future, by doctor).
+
+Here's a detailed breakdown of the methods in the PatientService class:
+
+Open the PatientService.java file.
+Open PatientService.java in IDE
+
+1. createPatient(Patient patient)
+Purpose
+Saves a new patient to the database
+Parameters
+Patient patient – The patient object to be saved
+Return Type
+int – Returns 1 on success, and 0 on failure (for example, exception)
+Explanation
+This method saves the patient to the database and handles exceptions that may arise during the save process.
+2. getPatientAppointment(Long id, String token)
+Purpose
+Retrieves a list of appointments for a specific patient
+Parameters
+Long id – The patient's ID
+String token – The JWT token containing the email
+Return Type
+ResponseEntity<Map<String, Object>> – Returns a response containing a list of appointments or an error message.
+Explanation
+The method checks if the provided patient ID matches the one decoded from the token (by email). If there's a mismatch, it returns an Unauthorized status.
+If the IDs match, it retrieves the patient's appointments and returns them as a list of AppointmentDTO objects.
+3. filterByCondition(String condition, Long id)
+Purpose
+Filters appointments by condition (past or future) for a specific patient
+Parameters
+String condition – The condition to filter by (past or future)
+Long id – The patient’s ID
+Return Type
+ResponseEntity<Map<String, Object>> – Returns the filtered appointments or an error message
+Explanation
+The method checks the condition value (past or future) and filters appointments accordingly. It uses the status (1 for past and 0 for future) to determine the filtering criteria.
+4. filterByDoctor(String name, Long patientId)
+Purpose
+Filters the patient's appointments by doctor's name
+Parameters
+String name – The name of the doctor
+Long patientId – The ID of the patient
+Return Type
+ResponseEntity<Map<String, Object>> – Returns the filtered appointments or an error message
+Explanation
+The method fetches appointments where the doctor's name matches the provided name and the patient ID matches the given patientId.
+5. filterByDoctorAndCondition(String condition, String name, long patientId)
+Purpose
+Filters the patient's appointments by doctor's name and appointment condition (past or future)
+Parameters
+String condition – The condition to filter by (past or future)
+String name – The name of the doctor
+long patientId – The ID of the patient
+Return Type
+ResponseEntity<Map<String, Object>> – Returns the filtered appointments or an error message
+Explanation
+The method combines the filtering criteria of both the doctor's name and the condition (past or future).
+6. getPatientDetails(String token)
+Purpose
+Fetches the patient's details based on the provided JWT token
+Parameters
+String token – The JWT token containing the email
+Return Type
+ResponseEntity<Map<String, Object>> – Returns the patient's details or an error message
+Explanation
+The method extracts the email from the token and retrieves the corresponding patient from the database. The patient details are then returned as part of the response.
+Helper Methods
+AppointmentDTO: The data transfer object (DTO) that represents an appointment. It is used to send appointment data in a simplified format, without including sensitive data.
+TokenService: Used to extract the email from the JWT token, which helps in ensuring the patient is authorized to access their information.
+
 package com.project.back_end.services;
 
 public class PatientService {
