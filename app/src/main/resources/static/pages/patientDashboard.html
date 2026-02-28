@@ -1,3 +1,79 @@
+patientDashboard.html (Static HTML Page)
+Next, you’ll create the the Patient Dashboard — a central page where patients can browse and filter doctor profiles, and initiate appointment bookings. This layout is interactive and uses dynamic rendering to show relevant doctors based on the patient’s selected filters or search input.
+
+You’ll also integrate modals to allow appointment booking and provide a rich UI experience using reusable components and state management in JavaScript.
+
+HTML Code
+Open the HTML File:
+Open patientDashboard.html located at app/src/main/resources/static/pages/patientDashboard.html
+Open patientDashboard.html in IDE
+
+Set Up the Head Section:
+Inside the <head> tag, include:
+
+Metadata and page title
+
+Favicon for branding
+
+Links to CSS files:
+
+<link rel="stylesheet" href="../assets/css/adminDashboard.css" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+<link rel="stylesheet" href="../assets/css/patientDashboard.css" />
+
+JS utility and component scripts with defer:
+
+<script src="../js/render.js" defer></script>
+<script src="../js/util.js" defer></script>
+<script src="../js/components/header.js" defer></script>
+<script src="../js/components/footer.js" defer></script>
+<script type="module" src="../js/components/modals.js"></script>
+
+Create the Body Structure:
+In the <body>, follow this layout:
+
+Wrap all content inside <div class="container"> and <div class="wrapper">.
+
+Insert the dynamic <div id="header"></div> for the role-based header.
+
+Inside <main class="main-content">, add:
+
+A search bar:
+
+<input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
+
+A filter section:
+
+<div class="filter-wrapper">
+  <select class="filter-select" id="filterTime">...</select>
+  <select class="filter-select" id="filterSpecialty">...</select>
+</div>
+
+The dropdowns allow filtering doctors by time availability (AM/PM) and specialty.
+
+A content container for dynamically rendered doctor cards:
+
+<div id="content"></div>
+
+Include <div id="footer"></div> to render the common footer.
+
+Add the reusable modal markup:
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+Load Page Logic:
+Add a JavaScript module to handle patient-specific rendering:
+
+<script type="module" src="../js/patientDashboard.js" defer></script>
+
+Also, call renderContent() on body load:
+
+<body onload="renderContent()">
 <!-- patientDashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
