@@ -1,3 +1,32 @@
+Open the CSS File:
+Open doctorDashboard.css located at app/src/main/resources/static/assets/css/doctorDashboard.css.
+Open doctorDashboard.css in IDE
+
+Reset & Base Styles:
+
+Apply global reset with * { margin: 0; padding: 0; box-sizing: border-box; }
+Set fonts and page height in html, body
+Layout:
+
+Use .wrapper as a vertical flex container
+Space and align .main-content elements for search, filters, and the table
+Search and Filter Styling:
+
+Input and buttons are padded, rounded, and spaced
+Button hover: background color shift (#015c5d → #017d7e)
+Table Styling:
+
+table: Full width, border-collapse
+thead: Dark semi-transparent background
+tbody tr: Alternating row colors, highlight on hover
+Extras:
+
+.prescription-btn: Add scale/brightness hover effect
+.noPatientRecord: Italic, gray text when no records
+Responsive Design:
+
+Mobile-friendly layout using flexible widths
+Add media queries to adjust font sizes and layout for small screens
 /* This is the style sheet for the doctorDashboard.html */
 /* 
 **Table Header (`.table-header`)**
