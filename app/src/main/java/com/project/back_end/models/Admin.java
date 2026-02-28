@@ -1,3 +1,27 @@
+Admin model
+The Admin model represents system administrators who have access to manage the backend portal of the Clinic Management System. Admins typically handle high-level operations such as user access, data review, and system maintenance. This model contains basic login credentials required to authenticate an admin.
+
+Open the Admin.java file src/main/java/com/project/back_end/models/Admin.java
+Open Admin.java in IDE
+
+Add the following attributes along with getters and setters:
+id: private Long – Auto-incremented primary key
+username: private String – Cannot be null
+password: private String – Cannot be null. This field should be write-only in JSON responses.
+
+Hints
+Annotate the class with @Entity to indicate that it should be mapped to a database table.
+Mark the id field with @Id and @GeneratedValue(strategy = GenerationType.IDENTITY) so it auto-increments as the primary key.
+Use @NotNull on the username and password fields to ensure that these values are always provided.
+Example:
+@NotNull(message = "username cannot be null")
+Annotate the password field with @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) so it is hidden from API responses but still accepted in incoming JSON requests.
+Add standard getters and setters for each field to allow Spring and Jackson to access the data.
+
+Tasks
+Define the class as a JPA entity
+Apply the required validation and JSON annotations to the fields
+Keep the implementation clean and modular to support future authentication or authorization features
 package com.project.back_end.models;
 
 public class Admin {
