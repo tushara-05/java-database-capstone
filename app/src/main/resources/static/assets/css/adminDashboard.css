@@ -1,3 +1,33 @@
+Open the CSS File:
+Open adminDashboard.css located at app/src/main/resources/static/assets/css/adminDashboard.css.
+Open adminDashboard.css in IDE
+
+Add Universal Styling:
+
+Reset and base setup:
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: Arial, sans-serif; }
+
+Layout and Wrappers:
+
+Use .wrapper and .main-content to apply:
+Vertical flex layout
+Background image settings
+Proper alignment and padding for clean layout
+Interactive Elements:
+
+Style the search bar, filter dropdowns, and the Add Doctor button:
+Use .button, .adminBtn, and hover states
+Rounded corners, consistent spacing, and accent colors
+
+Modal Styling:
+
+Ensure the modal is centered, hidden by default, and has smooth transitions
+Style inputs inside the modal form with padding and focus effects
+Doctor Cards and Content Area:
+
+Use flexbox for displaying doctor cards
+Ensure responsive behavior for smaller devices
 /*this is the style sheet for the adminDashboard. */
 
 /* 
