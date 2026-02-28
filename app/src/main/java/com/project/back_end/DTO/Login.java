@@ -1,3 +1,24 @@
+Login DTO
+you'll create a DTO to handle user login requests. This class will encapsulate user credentials submitted from the frontend.
+
+Let’s define a simple DTO class to receive the user’s identifier (which can be an email or username depending on the user type) and password during login operations.
+
+Open the Login.java file.
+Open Login.java in IDE
+
+Create a DTO class to represent login request data. This class will be used to receive login credentials from the client.
+
+Add the following fields:
+
+identifier: String – The unique identifier of the user attempting to log in (email for Doctor/Patient, username for Admin)
+password: String – The password provided by the user
+Add standard getter and setter methods for both fields to enable deserialization of the login request body.
+
+Hint:
+
+This class is typically used in @RequestBody parameters inside controller methods.
+Do not add any persistence annotations (@Entity, @Id, and so on).
+This DTO is used only for authentication input and is not stored in the database.
 package com.project.back_end.DTO;
 
 public class Login {
