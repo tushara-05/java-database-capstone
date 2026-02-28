@@ -1,3 +1,45 @@
+Footer.js with dynamic year
+The footer component remains consistent across all pages and includes branding, navigation links, or any additional information you want users to see at the bottom of the screen. Unlike the header, the footer is static and doesn't change based on user role.
+
+It improves modularity and makes layout maintenance easier by separating common footer content into a single file.
+
+Task:
+Open footer.js in IDE
+
+Create the Function
+
+function renderFooter() {
+
+Define a reusable function named renderFooter.
+Call this on every page that needs a footer.
+Access the Footer Container.
+
+const footer = document.getElementById("footer");
+
+This locates the DOM element <div> with id=”footer” where we want to inject our content.
+Make sure each HTML page has this container present.
+Inject HTML Content
+
+ footer.innerHTML = `...`;
+
+Replace the contents of the footer container with an HTML template string.
+This block includes branding, navigation, and legal info.
+You write regular HTML tags (<footer>, <div>, <h4>,<a>) as part of the string.
+- Top-level container: <footer class="footer"> wraps the whole thing.
+- Branding section:
+js <div class="footer-logo"> <img src="..." /> <p>© Copyright ...</p> </div> 
+- Link sections divided into 3 columns:
+- Company (About, Careers, Press)
+- Support (Account, Help Center, Contact)
+- Legals (Terms, Privacy Policy, Licensing)
+Each column uses a <div class="footer-column"> with a heading and anchor tags.
+
+Call the Function
+
+renderFooter();
+
+Call this function at the bottom of your footer.js so it runs when the file loads.
+We can also import and call it from each page if needed.
 /*
   Function to render the footer content into the page
       Select the footer element from the DOM
