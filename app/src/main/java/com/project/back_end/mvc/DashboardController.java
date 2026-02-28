@@ -1,3 +1,36 @@
+Dashboard controller
+The dashboard controller handles view rendering for Thymeleaf templates after validating a token for either admin or doctor users.
+
+Purpose: This controller serves as a gatekeeper to the Thymeleaf dashboard views (adminDashboard and doctorDashboard) by verifying access tokens for authenticated users.
+
+Open the DashboardController.java file
+Open DashboardController.java in IDE
+
+Set up the Controller class
+Annotate the class with @Controller to indicate it returns views, not JSON responses.
+This class maps requests to Thymeleaf templates based on user roles and tokens.
+Autowired dependencies
+Autowire the required service:
+
+Service for handling the token validation logic.
+Define the adminDashboard method
+Annotate with @GetMapping("/adminDashboard/{token}") to handle requests to the admin dashboard.
+
+Accept the token as a @PathVariable.
+
+Call validateToken(token, "admin") using the service and check if the returned map is empty:
+
+If empty: Token is valid → return the admin/adminDashboard view.
+If not empty: Redirect to login page.
+Define the doctorDashboard method
+Annotate with @GetMapping("/doctorDashboard/{token}") to handle doctor dashboard access.
+Accept the token as a @PathVariable.
+Call validateToken(token, "doctor") and apply the same logic as in the adminDashboard.
+Response
+Each method returns a view name (String) for Thymeleaf to resolve:
+
+If token is valid: Returns the respective dashboard template.
+If invalid: Redirects the user to the login page at http://localhost:8080.
 package com.project.back_end.mvc;
 
 public class DashboardController {
