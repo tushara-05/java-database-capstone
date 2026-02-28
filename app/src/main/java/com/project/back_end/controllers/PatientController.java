@@ -1,3 +1,66 @@
+Patient Controller
+This controller handles the operations related to the Patient entity. It allows patient registration, login, fetching patient details, getting and filtering patient appointments.
+
+Open the PatientController.java file.
+Open PatientController.java in IDE
+
+Methods and Endpoints
+Set Up the Controller Class
+
+Annotate the class with @RestController to designate it as a REST controller
+Use @RequestMapping("/patient") to set the base URL path for all methods in this controller
+Autowired Dependencies
+
+Autowire PatientService to handle business logic related to patient operations
+Autowire Service to handle token validation and other common functionality
+Method Definitions
+1. Get Patient Details
+Method: @GetMapping("/{token}")
+Parameters
+token: The authentication token for the patient.
+Process: Validates the token using service.validateToken(). If the token is valid, fetches the patient details using patientService.getPatientDetails().
+Response
+If token is invalid: Returns an error message with appropriate HTTP status.
+If successful: Returns the patient's details.
+2. Create a New Patient
+Method: @PostMapping()
+Parameters
+patient: The patient details to be created
+Process
+Validates if the patient already exists by checking email or phone number
+If the validation passes, calls patientService.createPatient() to create a new patient record
+Response
+Success: "Signup successful"
+Conflict: "Patient with email id or phone no already exist"
+Internal error: "Internal server error"
+3. Patient Login
+Method: @PostMapping("/login")
+Parameters
+login: The login credentials (email, password)
+Process: Calls service.validatePatientLogin() to validate the patient's login credentials
+Response: Returns the result of the login validation (success or failure)
+4. Get Patient Appointments
+Method: @GetMapping("/{id}/{token}")
+Parameters
+id: The ID of the patient
+token: The authentication token for the patient
+Process
+Validates the token using service.validateToken()
+If valid, fetches the patient's appointments using patientService.getPatientAppointment()
+Response
+Returns the list of patient appointments or an error message
+5. Filter Patient Appointments
+Method: @GetMapping("/filter/{condition}/{name}/{token}")
+Parameters
+condition: The condition to filter appointments (for example, "upcoming", "past")
+name: The name or description for filtering (for example, doctor name, appointment type)
+token: The authentication token for the patient
+Process
+Validates the token using service.validateToken()
+If valid, calls service.filterPatient() to filter the patient's appointments based on the given criteria
+Response
+Returns the filtered appointments or an error message
+
 package com.project.back_end.controllers;
 
 public class PatientController {
