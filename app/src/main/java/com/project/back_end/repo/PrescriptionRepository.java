@@ -1,3 +1,23 @@
+Prescription Repository
+Let's define the repository for MongoDB-based prescription data. This interface will allow you to fetch prescriptions by appointment ID.
+
+Open the PrescriptionRepository.java file.
+Open PrescriptionRepository.java in IDE
+
+Create a repository for the Prescription model by extending MongoRepository. This will allow for basic CRUD operations on MongoDB without implementing methods manually.
+
+Add the following method:
+
+findByAppointmentId: Find prescriptions associated with a specific appointment.
+
+Return type: List<Prescription>
+Parameter: Long appointmentId
+
+Hint:
+
+Extend MongoRepository<Prescription, String> to enable MongoDB CRUD functionality.
+Use method naming conventions like findByAppointmentId for query generation in MongoDB.
+
 package com.project.back_end.repo;
 
 public interface PrescriptionRepository  {
