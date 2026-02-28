@@ -1,3 +1,41 @@
+Appointment Controller
+This controller handles all CRUD operations related to appointments. It provides endpoints for booking, retrieving, updating, and canceling appointments. It also performs validation on tokens and ensures proper actions are taken based on user roles.
+
+Open the AppointmentController.java file.
+Open AppointmentController.java in IDE
+
+Set Up the Controller Class
+Annotate the class with @RestController to designate it as a REST controller for handling HTTP requests.
+Use @RequestMapping("/appointments") to set the base URL path for all methods in this controller.
+Autowired Dependencies
+Autowire the necessary services.
+AppointmentService for handling the business logic related to appointments (booking, retrieving, updating, and canceling appointments)
+Service for validation logic (token validation and appointment validation)
+Define the getAppointments Method
+Annotate this method with @GetMapping("/{date}/{patientName}/{token}").
+It takes the date, patientName, and token as path variables.
+It calls service.validateToken(token, "doctor") to validate the token, ensuring that only doctors can access appointment data.
+If token validation fails, return an error response.
+If token validation is successful, fetch the appointments using appointmentService.getAppointment() and return the appointments in the response.
+Define the bookAppointment Method
+Annotate this method with @PostMapping("/{token}").
+It accepts an Appointment object in the request body.
+It uses service.validateToken(token, "patient") to ensure that the request is from a valid patient.
+It validates the appointment using service.validateAppointment().
+If valid, it proceeds to book the appointment using appointmentService.bookAppointment().
+If booking is successful, return a success message with HTTP status 201 Created.
+If there is an error, return an appropriate error message and status.
+Define the updateAppointment Method
+Annotate this method with @PutMapping("/{token}").
+It accepts the token as a path variable and the Appointment object in the request body.
+It validates the token using service.validateToken(token, "patient").
+If valid, it updates the appointment using appointmentService.updateAppointment() and returns the result.
+Define the cancelAppointment Method
+Annotate this method with @DeleteMapping("/{id}/{token}").
+It accepts the id of the appointment and the token as path variables.
+It validates the token using service.validateToken(token, "patient").
+If valid, it cancels the appointment using appointmentService.cancelAppointment() and returns the result.
+
 package com.project.back_end.controllers;
 
 
