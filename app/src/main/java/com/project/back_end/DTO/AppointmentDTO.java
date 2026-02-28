@@ -1,3 +1,38 @@
+Appointment DTO
+You'll now create a DTO to represent appointment data. This class helps decouple frontend requirements from the internal database structure.
+
+Open the AppointmentDTO.java file.
+Open AppointmentDTO.java in IDE
+
+Create a DTO class that represents appointment data to be used in communication between your backend services and frontend clients.
+
+Add the following fields:
+
+id: Long – Unique identifier for the appointment
+doctorId: Long – ID of the doctor assigned to the appointment
+doctorName: String – Full name of the doctor
+patientId: Long – ID of the patient
+patientName: String – Full name of the patient
+patientEmail: String – Email address of the patient
+patientPhone: String – Contact number of the patient
+patientAddress: String – Residential address of the patient
+appointmentTime: LocalDateTime – Full date and time of the appointment
+status: int – Appointment status (e.g., scheduled, completed)
+appointmentDate: LocalDate – Extracted date from appointmentTime
+appointmentTimeOnly: LocalTime – Extracted time from appointmentTime
+endTime: LocalDateTime – Calculated as appointmentTime + 1 hour
+Add a constructor that initializes all core fields and automatically computes the following:
+
+appointmentDate using appointmentTime.toLocalDate()
+appointmentTimeOnly using appointmentTime.toLocalTime()
+endTime using appointmentTime.plusHours(1)
+Add standard getter methods for each field to allow serialization of the DTO in API responses.
+
+Hint:
+
+This DTO class should not contain persistence annotations like @Entity or @Id.
+It is meant to simplify and format data transferred to/from the frontend, decoupling it from internal database models.
+  
 package com.project.back_end.DTO;
 
 public class AppointmentDTO {
