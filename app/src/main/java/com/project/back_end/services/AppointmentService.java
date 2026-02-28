@@ -1,3 +1,55 @@
+AppointmentService
+Let's define the AppointmentService class to handle appointment creation, updating, cancellation, and filtering.
+
+Open the AppointmentService.java file.
+Open AppointmentService.java in IDE
+
+Create a service class to handle operations related to appointments, including booking, updating, canceling, and retrieving appointments.
+
+Hint: Add @Service annotation above the class definition.
+Declare necessary repositories to be used as private:
+
+AppointmentRepository for accessing appointment data
+PatientRepository for accessing patient data
+DoctorRepository for accessing doctor data
+TokenService for extracting tokens from the request
+Add the following methods:
+
+bookAppointment: This method books a new appointment.
+
+Parameters: Appointment appointment (The appointment object you want to book)
+Return Type: int (Returns 1 if successful, 0 if there's an error)
+Hint: Use appointmentRepository.save(appointment) to save the appointment.
+updateAppointment: This method updates an existing appointment.
+
+Parameters: Appointment appointment (The appointment object you want to update)
+Return Type: ResponseEntity<Map<String, String>> (Returns a response message indicating success or failure)
+Hint: Use appointmentRepository.findById(appointment.getId()) to check if the appointment exists before updating and use service.validateAppointment() to check if the update is valid.
+cancelAppointment: This method cancels an existing appointment.
+
+Parameters: long id (The ID of the appointment to cancel), String token (The authorization token)
+Return Type: ResponseEntity<Map<String, String>> (Returns a response message indicating success or failure)
+Hint: Use appointmentRepository.findById(id) to find the appointment and appointmentRepository.delete(appointment) to delete it.
+getAppointment: This method retrieves a list of appointments for a specific doctor on a specific date.
+
+Parameters: String pname (Patient name to filter by), LocalDate date (The date for appointments), String token (The authorization token)
+Return Type: Map<String, Object> (Returns a map containing the list of appointments)
+Hint: Use appointmentRepository.findByDoctorIdAndAppointmentTimeBetween() to fetch appointments for the given doctor and date. Filter by patient name if provided.
+Additional Hints
+bookAppointment Method
+
+Use this method to handle the creation of new appointments. If any errors occur during the booking process, it will return 0 to indicate failure.
+updateAppointment Method
+
+This method is used to modify an existing appointment, making sure to validate the data before saving it. It handles different error responses based on the type of issue (for example, invalid doctor ID, appointment already booked, and so on).
+cancelAppointment Method
+
+Use this method to cancel appointments. It ensures that the patient attempting to cancel the appointment is the one who originally booked it.
+getAppointment Method
+
+This method retrieves the list of appointments for a doctor on a particular date. It filters by patient name if provided, making it easy to search for specific appointments.
+
+
 package com.project.back_end.services;
 
 public class AppointmentService {
