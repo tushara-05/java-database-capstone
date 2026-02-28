@@ -1,3 +1,33 @@
+
+Open the index.css file app/src/main/resources/static/assets/css/index.css
+Open index.css in IDE
+
+Add the following gobal styling :
+
+* { margin: 0; padding: 0; box-sizing: border-box; }: Resets default margins, paddings, and sets consistent box-sizing for all elements.
+The body and HTML elements are styled for full height and to use the ‘Roboto’ font.
+Style the main wrapper:
+
+.wrapper sets the layout to be a flex column, ensuring the main content grows to take available space.
+Heading (h2) and Buttons:
+
+Styled for large, bold text with a specific color and font family.
+Buttons are centered and styled with background color, padding, rounded corners, and hover effects to change background color.
+Main Content Area:
+
+.main-content has a background image with properties for size, position, and attachment (fixed background that doesn’t scroll).
+The content is centered and aligned with the flexbox model.
+Modal and Button Interactions:
+
+Modal and button interaction styles include close button (.close), hover effects, and modal positioning.
+Footer and Header Styles:
+
+Includes .footer with layout for flexbox-based sectioning, responsive for mobile view.
+.header styles logo and nav items for a clean and responsive layout.
+Interactive Styles:
+
+Buttons, inputs are styled with hover and focus effects for interactivity.
+Specific styles are included for .dashboard-btn, .input-field, .select-dropdown, .checkbox-group, and more for a clean UI experience.
 /* this is the style sheet file for index.htlm  */
 
 /* 
