@@ -1,3 +1,22 @@
+Admin Repository
+This repository will support basic CRUD operations for admin users and allow you to find admins by username.
+
+Open the AdminRepository.java file.
+Open AdminRepository.java in IDE
+
+Create a repository for the Admin model by extending JpaRepository. This will allow for basic CRUD operations without needing to implement the methods manually.
+
+Add the following method:
+
+findByUsername: Find an admin by their username.
+
+Return type: Admin
+Parameter: String username
+
+Hint:
+
+Extend JpaRepository<Admin, Long> to inherit basic CRUD functionality.
+Declare custom query methods using Spring Data conventions, such as findByUsername.
 package com.project.back_end.repo;
 
 public interface AdminRepository {
