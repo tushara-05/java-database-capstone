@@ -1,8 +1,43 @@
+Appointment model
+The Appointment model represents a scheduled meeting between a doctor and a patient. It includes metadata such as the date, time, status of the appointment, and helper methods to extract specific time-based information. This model links together the Doctor and Patient entities to form the core of the clinic's scheduling system.
+
+Open the Appointment.java file src/main/java/com/project/back_end/models/Appointment.java
+Open Appointment.java in IDE
+
+Add the following attributes along with getters and setters:
+id: private Long – Auto-incremented primary key
+doctor: private Doctor – The doctor assigned to the appointment (required)
+patient: private Patient – The patient assigned to the appointment (required)
+appointmentTime: private LocalDateTime – The date and time of the appointment (must be in the future)
+status: private int – Status of the appointment (0 for Scheduled, 1 for Completed) (required)
+Add helper methods:
+getEndTime(): Returns the end time of the appointment (1 hour after start time)
+getAppointmentDate(): Returns only the date portion of the appointment
+getAppointmentTimeOnly(): Returns only the time portion of the appointment
+
+Hints
+Annotate the class with @Entity to indicate that it should be mapped to a JPA table.
+Mark id with:
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+Use @ManyToOne and @NotNull to define relationships to both Doctor and Patient.
+Apply @Future on appointmentTime:
+@Future(message = "Appointment time must be in the future")
+
+Mark the helper methods with @Transient so they aren't persisted in the database.
+Add standard getters and setters for all fields.
+
+Tasks
+Establish proper relationships between entities
+Implement custom methods to support UI display logic
+Validate appointment timing to prevent past scheduling
+
 package com.project.back_end.models;
 
 public class Appointment {
 
-  // @Entity annotation:
+// @Entity annotation:
 //    - Marks the class as a JPA entity, meaning it represents a table in the database.
 //    - Required for persistence frameworks (e.g., Hibernate) to map the class to a database table.
 
