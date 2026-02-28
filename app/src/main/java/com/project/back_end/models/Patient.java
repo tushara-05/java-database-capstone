@@ -1,3 +1,34 @@
+Patient model
+The Patient model represents users who book appointments and receive treatment. It captures personal details like contact information and address, and links to appointments and prescriptions indirectly.
+
+Open the Patient.java file
+src/main/java/com/project/back_end/models/Patient.java
+Open Patient.java in IDE
+
+Add the following attributes along with getters and setters:
+id: private Long – Auto-incremented primary key
+name: private String – Patient's full name (required, 3–100 characters)
+email: private String – Valid email address (required, must match email format)
+password: private String – Password (required, at least 6 characters)
+phone: private String – Phone number (required, must be 10 digits)
+address: private String – Patient's address (required, max 255 characters)
+
+Hints
+Annotate the class with @Entity
+Apply validation annotations like:
+@NotNull
+@Size(min = 3, max = 100)
+@Email
+@Size(min = 6)
+@Pattern(regexp = "\\d{10}")
+Add @Size(max = 255) to the address field
+Don't forget to include standard getters and setters
+
+Tasks
+Validate inputs to ensure clean and accurate patient data
+Follow consistent design and annotation patterns
+Prepare this model for use in authentication and reporting features
+
 package com.project.back_end.models;
 
 public class Patient {
