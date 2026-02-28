@@ -1,3 +1,67 @@
+adminDashboard.js - Managing Doctors
+Open the JS File:
+Open adminDashboard.js located at app/src/main/resources/static/js/adminDashboard.js.
+Open adminDashboard.js in IDE
+
+Import Required Modules : At the top of the file, import:
+The openModal function from the modal component file ../components/modals.js.
+The getDoctors , filterDoctors , saveDoctor functions from the doctorServices component file ./services/doctorServices.js.
+The createDoctorCard function from the doctorCard component file ./components/doctorCard.js.
+Event Binding :
+
+When the admin clicks the “Add Doctor” button, it triggers openModal(‘addDoctor’)
+
+  document.getElementById('addDocBtn').addEventListener('click', () => {
+ openModal('addDoctor');
+});
+
+Load Doctor Cards on Page Load:
+
+Use DOMContentLoaded or window.onload to trigger loadDoctorCards() on page load.
+loadDoctorCards(): Fetch all doctors and display them in the dashboard.
+Calls getDoctors() to fetch doctor list from backend.
+Clears existing content (innerHTML = "").
+
+ const contentDiv = document.getElementById("content");
+    contentDiv.innerHTML = ""; 
+
+Iterates through results and injects them using createDoctorCard() of './components/doctorCard.js'.
+Appends each card to the contentDiv.
+Implement Search and Filter Logic:
+
+Set up event listeners on:
+#searchBar
+Filter dropdowns
+
+document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
+document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
+document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
+
+Create filterDoctorsOnChange() function:
+Gathers current filter/search values
+Fetches and displays filtered results using filterDoctors() from './services/doctorServices.js'.
+If no match, show message “No doctors found”.
+renderDoctorCards(doctors) : Utility function to render doctor cards when passed a list.
+
+It iterates through the list passed doctors and display the cards.
+Handle Add Doctor Modal:
+
+When the “Add Doctor” button is clicked:
+openModal() opens the modal
+The modal form is populated with input fields for:
+Name, specialty, email, password, mobile no., availability time.
+Collects any checkbox values for doctor availability
+On form submission:
+Use adminAddDoctor() to collect data.
+Verifies that a valid login token exists (to authenticate the admin).
+Send a POST request using saveDoctor() from './services/doctorServices.js'
+If successful, closes the modal, reloads the page or doctor list, and shows a success message and refresh the doctor list.
+If failed, alerts the user with an error message.
+Notes
+Ensure the openModal() function is imported from ./components/modals.js.
+Ensure the createDoctorCard function is imported from ./components/doctorCard.js.
+Ensure the getDoctors , filterDoctors , saveDoctor function is imported from ./services/doctorServices.js'.
+Use async/await for Api Call functions.
 /*
   This script handles the admin dashboard functionality for managing doctors:
   - Loads all doctor cards
