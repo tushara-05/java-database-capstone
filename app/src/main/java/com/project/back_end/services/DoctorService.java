@@ -1,3 +1,102 @@
+Doctor Service
+You'll now implement logic for managing doctor entities, including saving, updating, searching, and validating doctor information.
+
+Open the DoctorService.java file.
+Open DoctorService.java in IDE
+
+Create a service class to manage operations related to doctors, including retrieving availability, saving, updating, deleting, and validating doctors.
+
+Hint: Add @Service annotation above the class definition.
+Declare necessary repositories to be used as private:
+
+DoctorRepository for accessing doctor data
+AppointmentRepository for accessing appointment data
+TokenService for generating and validating tokens
+Add the following methods:
+
+getDoctorAvailability: This method fetches the available slots for a specific doctor on a given date.
+
+Parameters: Long doctorId (The ID of the doctor), LocalDate date (The date for which availability is needed)
+Return Type: List<String> (A list of available time slots for the doctor on the specified date)
+Hint: Fetch appointments for the doctor on the specified date and filter out the booked slots from the available slots.
+saveDoctor: This method saves a new doctor to the database.
+
+Parameters: Doctor doctor (The doctor object you want to save)
+Return Type: int (Returns 1 for success, -1 if the doctor already exists, 0 for internal errors)
+Hint: Check if the doctor already exists by email before saving it.
+updateDoctor: This method updates the details of an existing doctor.
+
+Parameters: Doctor doctor (The doctor object with updated details)
+Return Type: int (Returns 1 for success, -1 if doctor not found, 0 for internal errors)
+Hint: Check if the doctor exists by ID before updating.
+getDoctors: This method retrieves a list of all doctors.
+
+Return Type: List<Doctor> (A list of all doctors)
+Hint: Use doctorRepository.findAll() to fetch all doctors.
+deleteDoctor: This method deletes a doctor by ID.
+
+Parameters: long id (The ID of the doctor to be deleted)
+Return Type: int (Returns 1 for success, -1 if doctor not found, 0 for internal errors)
+Hint: Use appointmentRepository.deleteAllByDoctorId() to delete all associated appointments before deleting the doctor.
+validateDoctor: This method validates a doctor's login credentials.
+
+Parameters: Login login (The login object containing email and password)
+Return Type: ResponseEntity<Map<String, String>> (Returns a response with a token if valid, or an error message if not)
+Hint: Use doctorRepository.findByEmail() to find the doctor by email and verify the password.
+findDoctorByName: This method finds doctors by their name.
+
+Parameters: String name (The name of the doctor to search for)
+Return Type: Map<String, Object> (Returns a map with the list of doctors matching the name)
+Hint: Use doctorRepository.findByNameLike() to search by partial name match.
+filterDoctorsByNameSpecilityandTime: This method filters doctors by name, specialty, and availability during AM/PM.
+
+Parameters: String name (Doctor's name), String specialty (Doctor's specialty), String amOrPm (Time of day: AM/PM)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: Use doctorRepository.findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase() to filter by name and specialty, then filter the results by time.
+filterDoctorByNameAndTime: This method filters doctors by name and their availability during AM/PM.
+
+Parameters: String name (Doctor's name), String amOrPm (Time of day: AM/PM)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: First, filter by name, then filter the result by time.
+filterDoctorByNameAndSpecility: This method filters doctors by name and specialty.
+
+Parameters: String name (Doctor's name), String specilty (Doctor's specialty)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: Use doctorRepository.findByNameContainingIgnoreCaseAndSpecialtyIgnoreCase() to filter by name and specialty.
+filterDoctorByTimeAndSpecility: This method filters doctors by specialty and their availability during AM/PM.
+
+Parameters: String specilty (Doctor's specialty), String amOrPm (Time of day: AM/PM)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: Use doctorRepository.findBySpecialtyIgnoreCase() to filter by specialty, then filter the results by time.
+filterDoctorBySpecility: This method filters doctors by specialty.
+
+Parameters: String specilty (Doctor's specialty)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: Use doctorRepository.findBySpecialtyIgnoreCase() to filter by specialty.
+filterDoctorsByTime: This method filters doctors by their availability during AM/PM.
+
+Parameters: String amOrPm (Time of day: AM/PM)
+Return Type: Map<String, Object> (Returns a map with the filtered list of doctors)
+Hint: Use doctorRepository.findAll() to fetch all doctors, then filter by available time.
+filterDoctorByTime: This private method filters a list of doctors by their available times (AM/PM).
+
+Parameters: List<Doctor> doctors (The list of doctors to filter), String amOrPm (Time of day: AM/PM)
+Return Type: List<Doctor> (Returns a filtered list of doctors)
+Hint: Filter doctors based on their available times, comparing the time slots with AM/PM.
+Additional Hints
+getDoctorAvailability Method
+
+Useful to find available time slots for a specific doctor on a given date. You can return the available slots after filtering out the booked ones
+saveDoctor Method
+
+Ensures that no duplicate doctor entries exist by email before saving the doctor
+updateDoctor Method
+
+Updates an existing doctor's details if found. If not found, it returns a conflict error
+filterDoctorsByNameSpecilityandTime Method
+
+Combines filtering by name, specialty, and time (AM/PM) for searching doctors
+
 package com.project.back_end.services;
 
 public class DoctorService {
