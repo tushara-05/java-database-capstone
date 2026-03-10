@@ -19,8 +19,9 @@ async function initializePage() {
 
     patientId = Number(patient.id);
 
-    const appointmentData = await getPatientAppointments(patientId, token, "patient") || [];
-    allAppointments = appointmentData.filter(app => app.patientId === patientId);
+    // getPatientAppointments returns the appointments array directly
+    const appointments = await getPatientAppointments(patientId, token, "patient") || [];
+    allAppointments = Array.isArray(appointments) ? appointments : [];
 
     renderAppointments(allAppointments);
   } catch (error) {
@@ -30,6 +31,8 @@ async function initializePage() {
 }
 
 function renderAppointments(appointments) {
+  if (!tableBody) return;
+
   tableBody.innerHTML = "";
 
   const actionTh = document.querySelector("#patientTable thead tr th:last-child");
@@ -49,12 +52,24 @@ function renderAppointments(appointments) {
       <td>${appointment.doctorName}</td>
       <td>${appointment.appointmentDate}</td>
       <td>${appointment.appointmentTimeOnly}</td>
-      <td>${appointment.status == 0 ? `<img src="../assets/images/edit/edit.png" alt="Edit" class="prescription-btn" data-id="${appointment.patientId}">` : "-"}</td>
+      <td>${appointment.status == 0 ? `<img src="../assets/images/edit/edit.png" alt="Edit" class="action-btn edit-btn" data-id="${appointment.id}">` :
+        (appointment.status == 1 || appointment.status == 2) ? `<img src="../assets/images/addPrescriptionIcon/addPrescription.png" alt="View Prescription" class="action-btn view-btn" data-id="${appointment.id}">` :
+          "Cancelled"
+      }</td>
     `;
 
     if (appointment.status == 0) {
-      const actionBtn = tr.querySelector(".prescription-btn");
-      actionBtn?.addEventListener("click", () => redirectToUpdatePage(appointment));
+      const editBtn = tr.querySelector(".edit-btn");
+      if (editBtn) {
+        editBtn.addEventListener("click", () => redirectToUpdatePage(appointment));
+      }
+    } else if (appointment.status == 1 || appointment.status == 2) {
+      const viewBtn = tr.querySelector(".view-btn");
+      if (viewBtn) {
+        viewBtn.addEventListener("click", () => {
+          window.location.href = `/pages/addPrescription.html?appointmentId=${appointment.id}&patientName=${appointment.patientName || "You"}&mode=view`;
+        });
+      }
     }
 
     tableBody.appendChild(tr);
@@ -81,15 +96,21 @@ function redirectToUpdatePage(appointment) {
 
 
 // Search and Filter Listeners
-document.getElementById("searchBar").addEventListener("input", handleFilterChange);
-document.getElementById("appointmentFilter").addEventListener("change", handleFilterChange);
+document.getElementById("searchBar")?.addEventListener("input", handleFilterChange);
+document.getElementById("appointmentFilter")?.addEventListener("change", handleFilterChange);
 
 async function handleFilterChange() {
-  const searchBarValue = document.getElementById("searchBar").value.trim();
-  const filterValue = document.getElementById("appointmentFilter").value;
+  const searchBar = document.getElementById("searchBar");
+  const filterSelect = document.getElementById("appointmentFilter");
 
-  const name = searchBarValue || null;
-  const condition = filterValue === "allAppointments" ? null : filterValue || null;
+  if (!searchBar || !filterSelect) return;
+
+  const searchBarValue = searchBar.value.trim();
+  const filterValue = filterSelect.value;
+
+  // Handle null/undefined - convert to empty string for URL
+  const name = (searchBarValue === null || searchBarValue === undefined || searchBarValue === '') ? '' : searchBarValue;
+  const condition = (filterValue === "allAppointments" || filterValue === null || filterValue === undefined || filterValue === '') ? '' : filterValue;
 
   try {
     const response = await filterAppointments(condition, name, token);
