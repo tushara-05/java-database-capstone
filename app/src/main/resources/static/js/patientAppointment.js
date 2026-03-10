@@ -53,17 +53,16 @@ function renderAppointments(appointments) {
       <td>${appointment.appointmentDate}</td>
       <td>${appointment.appointmentTimeOnly}</td>
       <td>${appointment.status == 0 ? `<img src="../assets/images/edit/edit.png" alt="Edit" class="action-btn edit-btn" data-id="${appointment.id}">` :
-        (appointment.status == 1 || appointment.status == 2) ? `<img src="../assets/images/addPrescriptionIcon/addPrescription.png" alt="View Prescription" class="action-btn view-btn" data-id="${appointment.id}">` :
+        appointment.status == 1 ? `<img src="../assets/images/addPrescriptionIcon/addPrescription.png" alt="View Prescription" class="action-btn view-btn" data-id="${appointment.id}">` :
           "Cancelled"
       }</td>
     `;
-
     if (appointment.status == 0) {
       const editBtn = tr.querySelector(".edit-btn");
       if (editBtn) {
         editBtn.addEventListener("click", () => redirectToUpdatePage(appointment));
       }
-    } else if (appointment.status == 1 || appointment.status == 2) {
+    } else if (appointment.status == 1) {
       const viewBtn = tr.querySelector(".view-btn");
       if (viewBtn) {
         viewBtn.addEventListener("click", () => {
