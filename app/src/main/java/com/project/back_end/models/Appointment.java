@@ -36,7 +36,7 @@ public class Appointment {
     private LocalDateTime appointmentTime;
 
     @NotNull(message = "Status cannot be null")
-    private int status; // 0 = Scheduled, 1 = Completed, 2 = Prescribed
+    private int status; // 0 = Scheduled, 1 = Completed
 
     // No-argument constructor required by JPA
     public Appointment() {
