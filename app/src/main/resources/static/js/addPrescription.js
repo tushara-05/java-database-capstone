@@ -39,19 +39,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log("getPrescription :: ", response);
 
       // Check if prescription exists - API returns single object, not array
-      if (response.prescription) {
+      if (response && response.prescription) {
         const existingPrescription = response.prescription;
         if (patientNameInput) patientNameInput.value = existingPrescription.patientName || "You";
         if (medicinesInput) medicinesInput.value = existingPrescription.medication || "";
         if (dosageInput) dosageInput.value = existingPrescription.dosage || "";
         if (notesInput) notesInput.value = existingPrescription.doctorNotes || "";
+      } else if (mode === "view") {
+        alert("⚠️ No prescription data found for this appointment.");
+        console.warn("API returned no prescription for appointment:", appointmentId);
       }
 
     } catch (error) {
-      if (error.message && error.message.includes("not found")) {
-        console.log("No existing prescription found for this appointment. Ready to create a new one.");
-      } else {
-        console.warn("Failed to load existing prescription:", error);
+      console.error("Error :: getPrescription ::", error);
+      if (mode === "view") {
+        alert("❌ Failed to load prescription details: " + error.message);
       }
     }
   }
@@ -88,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         medication: medicinesInput ? medicinesInput.value : "",
         dosage: dosageInput ? dosageInput.value : "",
         doctorNotes: notesInput ? notesInput.value : "",
-        appointmentId
+        appointmentId: appointmentId ? Number(appointmentId) : null
       };
 
       const { success, message } = await savePrescription(prescription, token);
