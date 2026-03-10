@@ -211,7 +211,7 @@ public class AppointmentService {
                 statusValue = 1;
                 break;
             case "prescribed":
-                statusValue = 2; // Prescribed status
+                statusValue = 1; // Completed status covers Prescribed
                 break;
             default:
                 statusValue = 0;
