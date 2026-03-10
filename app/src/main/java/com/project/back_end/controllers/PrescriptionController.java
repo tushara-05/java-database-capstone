@@ -53,7 +53,7 @@ public class PrescriptionController {
 
         ResponseEntity<?> response = prescriptionService.savePrescription(prescription);
         if (response.getStatusCode().is2xxSuccessful()) {
-            appointmentService.changeStatus(prescription.getAppointmentId(), 2);
+            appointmentService.changeStatus(prescription.getAppointmentId(), 1);
         }
         return response;
     }
