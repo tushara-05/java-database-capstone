@@ -7,13 +7,17 @@ export function getAppointments(appointment) {
       <td>${appointment.doctorName}</td>
       <td>${appointment.date}</td>
       <td>${appointment.time}</td>
-      <td><img src="../assets/images/edit/edit.png" alt="action" class="prescription-btn" data-id="${appointment.id}"></img></td>
+      <td><img src="../assets/images/edit/edit.png" alt="action" class="prescription-btn" data-id="${appointment.id}"></td>
     `;
 
   // Attach event listeners
-  tr.querySelector(".prescription-btn").addEventListener("click", () => {
-    window.location.href = `addPrescription.html?id=${patient.id}`;
-  });
+  const prescriptionBtn = tr.querySelector(".prescription-btn");
+  if (prescriptionBtn) {
+    prescriptionBtn.addEventListener("click", () => {
+      window.location.href = `/pages/addPrescription.html?appointmentId=${appointment.id}&patientName=${appointment.patientName}`;
+    });
+  }
 
   return tr;
 }
+
