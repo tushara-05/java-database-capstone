@@ -1,16 +1,21 @@
-<!-- patientAppointment.html -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="../assets/images/logo/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../assets/images/logo/logo.png" />
   <title>Patient Appointments</title>
+  <!-- Load global stylesheet first -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- Load page-specific stylesheets -->
   <link rel="stylesheet" href="../assets/css/adminDashboard.css">
   <link rel="stylesheet" href="../assets/css/doctorDashboard.css">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script src="../js/render.js" defer></script>
+  <!-- Load util.js first - defines setRole, getRole -->
   <script src="../js/util.js" defer></script>
+  <!-- Load render.js - defines selectRole -->
+  <script src="../js/render.js" defer></script>
+  <!-- Load remaining scripts -->
   <script src="../js/components/header.js" defer></script>
   <script src="../js/components/footer.js" defer></script>
   <script type="module" src="../js/patientAppointment.js" defer></script>
@@ -23,15 +28,15 @@
       <div class="main-content">
         <h2>Patient <span>Appointment</span></h2>
         <input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
-                <div class="filter-wrapper">
-                    <select class="filter-select" id="appointmentFilter">
-                        <option value="allAppointments">All Appointments</option>
-                        <option value="future">Upcoming Appointments</option>
-                        <option value="past">Past Appointments</option>
-                    </select>
-                </div>
+        <div class="filter-wrapper">
+          <select class="filter-select" id="appointmentFilter">
+            <option value="allAppointments">All Appointments</option>
+            <option value="future">Upcoming Appointments</option>
+            <option value="past">Past Appointments</option>
+          </select>
+        </div>
         <table id="patientTable">
-          <thead class="table-header">
+          <thead>
             <tr>
               <th>Patient Name</th>
               <th>Doctor Name</th>
@@ -49,4 +54,5 @@
     </div>
   </div>
 </body>
+
 </html>
