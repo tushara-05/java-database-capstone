@@ -5,13 +5,14 @@ export function createPatientRecordRow(patient) {
       <td class="patient-id">${patient.appointmentDate}</td>
       <td>${patient.id}</td>
       <td>${patient.patientId}</td>
-      <td><img src="../assets/images/addPrescriptionIcon/addPrescription.png" alt="addPrescriptionIcon" class="prescription-btn" data-id="${patient.id}"></img></td>
+      <td>${patient.status == 1 ? `<img src="../assets/images/addPrescriptionIcon/addPrescription.png" alt="View Prescription" title="View Prescription" class="prescription-btn" data-id="${patient.id}">` : "Scheduled"}</td>
     `;
-
   // Attach event listeners
-  tr.querySelector(".prescription-btn").addEventListener("click", () => {
-    window.location.href = `/pages/addPrescription.html?mode=view&appointmentId=${patient.id}`;
-  });
-
+  const prescriptionBtn = tr.querySelector(".prescription-btn");
+  if (prescriptionBtn) {
+    prescriptionBtn.addEventListener("click", () => {
+      window.location.href = `/pages/addPrescription.html?mode=view&appointmentId=${patient.id}&patientName=${patient.patientName || "You"}`;
+    });
+  }
   return tr;
 }
