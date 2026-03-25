@@ -1,7 +1,6 @@
-/* This is the stylesheet for the addPrescription.html */
+/* addPrescription.css - Stylesheet for addPrescription.html */
 
 .form-container {
-    width: 100%; 
     max-width: 600px;
     background: #ffffffc8;
     margin: 50px auto;
@@ -9,29 +8,41 @@
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-in-out;
-  }
+}
 
-  .container h2 {
+.form-container h2 {
     text-align: center;
     color: #222;
     font-size: 28px;
     margin-bottom: 25px;
-  }
+}
 
-  .container h2 span {
+.form-container h2 span {
     color: #A62B1F;
-  }
+}
 
-  label {
+label {
     display: block;
     margin-bottom: 6px;
     font-weight: 500;
     color: #333;
     text-align: left;
     font-size: 13px;
-  }
+}
 
-  input, textarea {
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc6e;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    font-family: "Verdana";
+}
+
+textarea {
     width: 100%;
     padding: 12px;
     resize: vertical;
@@ -42,18 +53,21 @@
     outline: none;
     transition: 0.3s;
     font-family: "Verdana";
-  }
+}
 
-  input:focus, textarea:focus {
+input:focus,
+textarea:focus,
+select:focus {
     border-color: #015c5d;
     box-shadow: 0 0 4px #a7f3d0;
     filter: brightness(1.5);
-  }
+}
 
-  #patientName{
+#patientName {
     background-color: #bdbcbc80;
-  }
-  .btn-primary {
+}
+
+.btn-primary {
     background-color: #047857;
     color: #fff;
     padding: 14px;
@@ -63,13 +77,13 @@
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
-  }
+}
 
-  .btn-primary:hover {
+.btn-primary:hover {
     background-color: #065f46;
-  }
+}
 
-  .btn-secondary {
+.btn-secondary {
     background-color: transparent;
     color: #333;
     border: 1px solid #ccc;
@@ -79,13 +93,21 @@
     font-size: 15px;
     margin-top: 12px;
     cursor: pointer;
-  }
+}
 
-  .btn-secondary:hover{
+.btn-secondary:hover {
+    background-color: #555555;
     color: #fff;
-  }
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
