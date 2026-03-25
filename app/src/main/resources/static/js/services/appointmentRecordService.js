@@ -1,18 +1,20 @@
 // appointmentRecordService.js
 import { API_BASE_URL } from "../config/config.js";
 const APPOINTMENT_API = `${API_BASE_URL}/appointments`;
-
-
 //This is for the doctor to get all the patient Appointments
 export async function getAllAppointments(date, patientName, token) {
-  const response = await fetch(`${APPOINTMENT_API}/${date}/${patientName}/${token}`);
+  // Handle null/undefined values - convert to empty string for query parameter
+  const searchPatientName = (patientName === null || patientName === undefined) ? '' : patientName;
+  
+  const encodedDate = encodeURIComponent(date || '');
+  const encodedPatientName = encodeURIComponent(searchPatientName);
+  const encodedToken = encodeURIComponent(token || '');
+  const response = await fetch(`${APPOINTMENT_API}?date=${encodedDate}&patientName=${encodedPatientName}&token=${encodedToken}`);
   if (!response.ok) {
     throw new Error("Failed to fetch appointments");
   }
-
   return await response.json();
 }
-
 export async function bookAppointment(appointment, token) {
   try {
     const response = await fetch(`${APPOINTMENT_API}/${token}`, {
@@ -22,7 +24,6 @@ export async function bookAppointment(appointment, token) {
       },
       body: JSON.stringify(appointment)
     });
-
     const data = await response.json();
     return {
       success: response.ok,
@@ -36,7 +37,6 @@ export async function bookAppointment(appointment, token) {
     };
   }
 }
-
 export async function updateAppointment(appointment, token) {
   try {
     const response = await fetch(`${APPOINTMENT_API}/${token}`, {
@@ -46,7 +46,6 @@ export async function updateAppointment(appointment, token) {
       },
       body: JSON.stringify(appointment)
     });
-
     const data = await response.json();
     return {
       success: response.ok,
