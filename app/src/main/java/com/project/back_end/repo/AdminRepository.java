@@ -1,30 +1,34 @@
 package com.project.back_end.repo;
 
-public interface AdminRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    // 1. Extend JpaRepository:
-//    - The repository extends JpaRepository<Admin, Long>, which gives it basic CRUD functionality.
-//    - The methods such as save, delete, update, and find are inherited without the need for explicit implementation.
-//    - JpaRepository also includes pagination and sorting features.
+import com.project.back_end.models.Admin;
 
-// Example: public interface AdminRepository extends JpaRepository<Admin, Long> {}
+/**
+ * Repository interface for performing database operations on {@link Admin} entities.
+ *
+ * <p>This interface extends {@link JpaRepository}, which provides built-in methods
+ * for common database operations such as save, findById, findAll, and delete —
+ * without needing to write any SQL queries manually.</p>
+ *
+ * <p>Spring Data JPA automatically provides a working implementation of this interface
+ * at runtime, so no concrete class is needed.</p>
+ *
+ * <p>The Admin data is stored in the MySQL (relational) database.</p>
+ */
+@Repository
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 
-// 2. Custom Query Method:
-//    - **findByUsername**:
-//      - This method allows you to find an Admin by their username.
-//      - Return type: Admin
-//      - Parameter: String username
-//      - It will return an Admin entity that matches the provided username.
-//      - If no Admin is found with the given username, it returns null.
-
-// Example: public Admin findByUsername(String username);
-
-// 3. Add @Repository annotation:
-//    - The @Repository annotation marks this interface as a Spring Data JPA repository.
-//    - While it is technically optional (since JpaRepository is a part of Spring Data), it's good practice to include it for clarity.
-//    - Spring Data JPA automatically implements the repository, providing the necessary CRUD functionality.
-
-// Example: @Repository
-//          public interface AdminRepository extends JpaRepository<Admin, Long> { ... }
+    /**
+     * Finds an admin by their username.
+     *
+     * <p>Spring Data JPA automatically generates the query based on the method name.
+     * It looks for an admin record where the {@code username} field matches the given value.</p>
+     *
+     * @param username the username to search for
+     * @return the {@link Admin} with the given username, or {@code null} if not found
+     */
+    Admin findByUsername(String username);
 
 }
