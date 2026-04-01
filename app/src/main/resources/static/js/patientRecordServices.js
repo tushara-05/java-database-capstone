@@ -12,6 +12,8 @@ const doctorId = urlParams.get("doctorId");
 document.addEventListener("DOMContentLoaded", initializePage);
 
 async function initializePage() {
+  if (!tableBody) return;
+
   try {
     if (!token) throw new Error("No token found");
 
@@ -19,8 +21,7 @@ async function initializePage() {
 
     // Filter by both patientId and doctorId
     const filteredAppointments = appointmentData.filter(app =>
-      app.doctorId == doctorId);
-    console.log(filteredAppointments)
+      String(app.doctorId) === String(doctorId));
     renderAppointments(filteredAppointments);
   } catch (error) {
     console.error("Error loading appointments:", error);
@@ -29,15 +30,17 @@ async function initializePage() {
 }
 
 function renderAppointments(appointments) {
+  if (!tableBody) return;
+
   tableBody.innerHTML = "";
 
   const actionTh = document.querySelector("#patientTable thead tr th:last-child");
   if (actionTh) {
-    actionTh.style.display = "table-cell"; // Always show "Actions" column
+    actionTh.style.display = "table-cell"; 
   }
 
   if (!appointments.length) {
-    tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No Appointments Found</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No Appointments Found</td></tr>`;
     return;
   }
 
@@ -46,3 +49,4 @@ function renderAppointments(appointments) {
     tableBody.appendChild(row);
   });
 }
+
