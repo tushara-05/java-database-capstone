@@ -1,49 +1,59 @@
-<!-- patientDashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="../assets/images/logo/logo.png" />
-    <title>PatientDashboard</title>
-    <link rel="stylesheet" href="../assets/css/adminDashboard.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/patientDashboard.css">
-    <script src="../js/render.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo/logo.png" />
+    <!-- Load global stylesheet first -->
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <!-- Load page-specific stylesheet -->
+    <link rel="stylesheet" href="../assets/css/patientDashboard.css" />
+    <!-- Load util.js first - defines setRole, getRole -->
     <script src="../js/util.js" defer></script>
+    <!-- Load render.js - defines selectRole -->
+    <script src="../js/render.js" defer></script>
+    <!-- Load header and footer components -->
     <script src="../js/components/header.js" defer></script>
     <script src="../js/components/footer.js" defer></script>
+    <!-- Load modals.js as module - defines openModal -->
     <script type="module" src="../js/components/modals.js"></script>
 </head>
-
 <body onload="renderContent()">
     <div class="container">
         <div class="wrapper">
             <div id="header"></div>
             <main class="main-content">
-                <input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
+                <h2>Consult a Doctor</h2>
+                <input type="text" id="searchBar" class="searchBar" placeholder="Search doctor by name" />
                 <div class="filter-wrapper">
                     <select class="filter-select" id="filterTime">
-                        <option value="">Sort by Time</option>
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
+                        <option value="">Filter by Time</option>
+                        <option value="09:00-10:00">09:00-10:00</option>
+                        <option value="10:00-11:00">10:00-11:00</option>
+                        <option value="11:00-12:00">11:00-12:00</option>
+                        <option value="12:00-13:00">12:00-13:00</option>
+                        <option value="13:00-14:00">13:00-14:00</option>
+                        <option value="14:00-15:00">14:00-15:00</option>
+                        <option value="15:00-16:00">15:00-16:00</option>
+                        <option value="16:00-17:00">16:00-17:00</option>
                     </select>
-                    <select class="filter-select" id="filterSpecialty">
-                        <option value="">Filter by Specialty</option>
-                        <option value="Cardiologist">Cardiologist</option>
-                        <option value="Dermatologist">Dermatologist</option>
-                        <option value="Neurologist">Neurologist</option>
-                        <option value="Pediatrician">Pediatrician</option>
-                        <option value="Orthopedic">Orthopedic</option>
-                        <option value="Gynecologist">Gynecologist</option>
-                        <option value="Psychiatrist">Psychiatrist</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Ophthalmologist">Ophthalmologist</option>
-                        <option value="Ent">ENT Specialist</option>
-                        <option value="Urologist">Urologist</option>
-                        <option value="Oncologist">Oncologist</option>
-                        <option value="Gastroenterologist">Gastroenterologist</option>
-                        <option value="General">General Physician</option>
+                    <select class="filter-select" id="filterSpeciality">
+                        <option value="">Filter by Speciality</option>
+                        <option value="cardiologist">Cardiologist</option>
+                        <option value="dermatologist">Dermatologist</option>
+                        <option value="neurologist">Neurologist</option>
+                        <option value="pediatrician">Pediatrician</option>
+                        <option value="orthopedic">Orthopedic</option>
+                        <option value="gynecologist">Gynecologist</option>
+                        <option value="psychiatrist">Psychiatrist</option>
+                        <option value="dentist">Dentist</option>
+                        <option value="ophthalmologist">Ophthalmologist</option>
+                        <option value="ent">ENT Specialist</option>
+                        <option value="urologist">Urologist</option>
+                        <option value="oncologist">Oncologist</option>
+                        <option value="gastroenterologist">Gastroenterologist</option>
+                        <option value="general">General Physician</option>
                     </select>
                 </div>
                 <div id="content"></div>
@@ -51,13 +61,16 @@
             <div id="footer"></div>
         </div>
     </div>
+    <!-- Modal for Booking Appointment -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
             <div id="modal-body"></div>
         </div>
     </div>
+    <!-- Load doctor services for filtering -->
+    <script type="module" src="../js/services/doctorServices.js" defer></script>
+    <!-- Load page-specific JavaScript -->
     <script type="module" src="../js/patientDashboard.js" defer></script>
 </body>
-
 </html>
