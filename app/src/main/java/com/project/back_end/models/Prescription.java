@@ -1,56 +1,200 @@
 package com.project.back_end.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Represents a Prescription issued by a doctor to a patient after an appointment.
+ *
+ * <p>Unlike other entities (Admin, Doctor, Patient, Appointment) which are stored in
+ * MySQL (relational database), prescriptions are stored in <b>MongoDB</b> (a NoSQL database).
+ * The collection name in MongoDB is "prescriptions".</p>
+ *
+ * <p>A prescription is always linked to a specific appointment via the {@code appointmentId}.
+ * It contains the medication name, dosage instructions, and optional notes from the doctor.</p>
+ */
+@Document(collection = "prescriptions")
 public class Prescription {
 
-  // @Document annotation:
-//    - Marks the class as a MongoDB document (a collection in MongoDB).
-//    - The collection name is specified as "prescriptions" to map this class to the "prescriptions" collection in MongoDB.
+    /**
+     * The unique identifier for this prescription in MongoDB.
+     * MongoDB automatically generates this as a string (ObjectId).
+     */
+    @Id
+    private String id;
 
-// 1. 'id' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the unique identifier for each prescription.
-//      - The @Id annotation marks it as the primary key in the MongoDB collection.
-//      - The id is of type String, which is commonly used for MongoDB's ObjectId as it stores IDs as strings in the database.
+    /**
+     * The name of the patient who received the prescription.
+     * Must be between 3 and 100 characters and cannot be null.
+     */
+    @NotNull(message = "Patient name cannot be null")
+    @Size(min = 3, max = 100, message = "Patient name must be between 3 and 100 characters")
+    private String patientName;
 
-// 2. 'patientName' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the name of the patient receiving the prescription.
-//      - The @NotNull annotation ensures that the patient name is required.
-//      - The @Size(min = 3, max = 100) annotation ensures that the name length is between 3 and 100 characters, ensuring a reasonable name length.
+    /**
+     * The ID of the appointment this prescription is associated with.
+     * Links this MongoDB document to the corresponding appointment in the MySQL database.
+     * Cannot be null.
+     */
+    @NotNull(message = "Appointment ID cannot be null")
+    private Long appointmentId;
 
-// 3. 'appointmentId' field:
-//    - Type: private Long
-//    - Description:
-//      - Represents the ID of the associated appointment where the prescription was given.
-//      - The @NotNull annotation ensures that the appointment ID is required for the prescription.
+    /**
+     * The name of the medication prescribed to the patient.
+     * Must be between 3 and 100 characters and cannot be null.
+     */
+    @NotNull(message = "Medication cannot be null")
+    @Size(min = 3, max = 100, message = "Medication name must be between 3 and 100 characters")
+    private String medication;
 
-// 4. 'medication' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the medication prescribed to the patient.
-//      - The @NotNull annotation ensures that the medication name is required.
-//      - The @Size(min = 3, max = 100) annotation ensures that the medication name is between 3 and 100 characters, which ensures meaningful medication names.
+    /**
+     * The dosage instructions for the prescribed medication (e.g., "1 tablet twice daily").
+     * Must be between 3 and 20 characters and cannot be null.
+     */
+    @NotNull(message = "Dosage cannot be null")
+    @Size(min = 3, max = 20, message = "Dosage must be between 3 and 20 characters")
+    private String dosage;
 
-// 5. 'dosage' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the dosage information for the prescribed medication.
-//      - The @NotNull annotation ensures that the dosage information is provided.
+    /**
+     * Optional additional notes from the doctor regarding this prescription.
+     * For example: "Take after meals" or "Avoid alcohol".
+     * Can be null or empty. Maximum 200 characters.
+     */
+    @Size(max = 200, message = "Doctor notes cannot exceed 200 characters")
+    private String doctorNotes;
 
-// 6. 'doctorNotes' field:
-//    - Type: private String
-//    - Description:
-//      - Represents any additional notes or instructions from the doctor regarding the prescription.
-//      - The @Size(max = 200) annotation ensures that the doctor's notes do not exceed 200 characters, providing a reasonable limit for additional notes.
+    /**
+     * No-argument constructor required by MongoDB.
+     * MongoDB uses this to create Prescription instances when loading documents.
+     */
+    public Prescription() {
+    }
 
-// 7. Constructors:
-//    - The class includes a no-argument constructor (default constructor) and a parameterized constructor that initializes the fields: patientName, medication, dosage, doctorNotes, and appointmentId.
+    /**
+     * Creates a new Prescription with all the required details.
+     *
+     * @param patientName   the name of the patient receiving the prescription
+     * @param appointmentId the ID of the appointment linked to this prescription
+     * @param medication    the name of the prescribed medication
+     * @param dosage        the dosage instructions (e.g., "500mg twice a day")
+     * @param doctorNotes   optional notes from the doctor (can be null)
+     */
+    public Prescription(String patientName, Long appointmentId, String medication, String dosage, String doctorNotes) {
+        this.patientName = patientName;
+        this.appointmentId = appointmentId;
+        this.medication = medication;
+        this.dosage = dosage;
+        this.doctorNotes = doctorNotes;
+    }
 
-// 8. Getters and Setters:
-//    - Standard getter and setter methods are provided for all fields: id, patientName, medication, dosage, doctorNotes, and appointmentId.
-//    - These methods allow access and modification of the fields of the Prescription class.
+    /**
+     * Returns the unique MongoDB ID of this prescription.
+     *
+     * @return the prescription's MongoDB document ID
+     */
+    public String getId() {
+        return id;
+    }
 
+    /**
+     * Sets the unique MongoDB ID of this prescription.
+     *
+     * @param id the ID to assign
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    /**
+     * Returns the name of the patient who received this prescription.
+     *
+     * @return the patient's name
+     */
+    public String getPatientName() {
+        return patientName;
+    }
+
+    /**
+     * Sets the name of the patient who received this prescription.
+     *
+     * @param patientName the patient name to set
+     */
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    /**
+     * Returns the ID of the appointment linked to this prescription.
+     *
+     * @return the appointment's ID from the MySQL database
+     */
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+
+    /**
+     * Sets the appointment ID for this prescription.
+     *
+     * @param appointmentId the appointment ID to link
+     */
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    /**
+     * Returns the name of the medication prescribed.
+     *
+     * @return the medication name
+     */
+    public String getMedication() {
+        return medication;
+    }
+
+    /**
+     * Sets the medication name for this prescription.
+     *
+     * @param medication the medication name to set
+     */
+    public void setMedication(String medication) {
+        this.medication = medication;
+    }
+
+    /**
+     * Returns the dosage instructions for this prescription.
+     *
+     * @return the dosage string (e.g., "500mg twice daily")
+     */
+    public String getDosage() {
+        return dosage;
+    }
+
+    /**
+     * Sets the dosage instructions for this prescription.
+     *
+     * @param dosage the dosage to set
+     */
+    public void setDosage(String dosage) {
+        this.dosage = dosage;
+    }
+
+    /**
+     * Returns the optional doctor's notes for this prescription.
+     *
+     * @return the doctor's notes, or null if none were provided
+     */
+    public String getDoctorNotes() {
+        return doctorNotes;
+    }
+
+    /**
+     * Sets the doctor's notes for this prescription.
+     *
+     * @param doctorNotes the notes to set (can be null)
+     */
+    public void setDoctorNotes(String doctorNotes) {
+        this.doctorNotes = doctorNotes;
+    }
 }
