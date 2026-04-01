@@ -1,27 +1,66 @@
-
 package com.project.back_end.controllers;
 
+import jakarta.validation.Valid;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.project.back_end.models.Admin;
+import com.project.back_end.services.ServiceClass;
+
+/**
+ * REST Controller that handles HTTP requests related to admin operations.
+ *
+ * <p>This controller exposes endpoints for admin authentication.
+ * It is the entry point for all requests starting with the configured API path
+ * followed by {@code /admin}.</p>
+ *
+ * <p>{@code @RestController} marks this class as a REST controller that automatically
+ * serializes return values into JSON responses.</p>
+ *
+ * <p>{@code @RequestMapping("${api.path}admin")} sets the base URL for all
+ * endpoints in this controller, where {@code ${api.path}} is a configurable 
+ * prefix from application properties (e.g., {@code /api/v1/}).</p>
+ */
+@RestController
+@RequestMapping("${api.path}admin")
 public class AdminController {
 
-// 1. Set Up the Controller Class:
-//    - Annotate the class with `@RestController` to indicate that it's a REST controller, used to handle web requests and return JSON responses.
-//    - Use `@RequestMapping("${api.path}admin")` to define a base path for all endpoints in this controller.
-//    - This allows the use of an external property (`api.path`) for flexible configuration of endpoint paths.
+    /** Shared service class used for admin login validation. */
+    private final ServiceClass service;
 
+    /**
+     * Constructor that injects the shared service dependency.
+     *
+     * @param service the shared {@link ServiceClass} for handling admin validation
+     */
+    @Autowired
+    public AdminController(ServiceClass service) {
+        this.service = service;
+    }
 
-// 2. Autowire Service Dependency:
-//    - Use constructor injection to autowire the `Service` class.
-//    - The service handles core logic related to admin validation and token checking.
-//    - This promotes cleaner code and separation of concerns between the controller and business logic layer.
-
-
-// 3. Define the `adminLogin` Method:
-//    - Handles HTTP POST requests for admin login functionality.
-//    - Accepts an `Admin` object in the request body, which contains login credentials.
-//    - Delegates authentication logic to the `validateAdmin` method in the service layer.
-//    - Returns a `ResponseEntity` with a `Map` containing login status or messages.
-
-
-
+    /**
+     * Handles HTTP POST requests for admin login.
+     *
+     * <p>Accepts an {@link Admin} object in the request body containing
+     * the admin's {@code username} and {@code password}. The credentials are validated
+     * against the database, and if correct, a JWT token is returned.</p>
+     *
+     * <p>Endpoint: {@code POST /admin/login}</p>
+     *
+     * @param admin the request body containing the admin's username and password.
+     *              The {@code @Valid} annotation ensures the fields are validated
+     *              according to constraints in the {@link Admin} model.
+     * @return a {@link ResponseEntity} with a JWT token on successful login,
+     *         or an error message if the credentials are invalid
+     */
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> adminLogin(@Valid @RequestBody Admin admin) {
+        return service.validateAdmin(admin);
+    }
 }
-
