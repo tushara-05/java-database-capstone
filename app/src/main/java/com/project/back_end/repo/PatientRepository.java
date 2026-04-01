@@ -1,29 +1,43 @@
 package com.project.back_end.repo;
 
-public interface PatientRepository {
-    // 1. Extend JpaRepository:
-//    - The repository extends JpaRepository<Patient, Long>, which provides basic CRUD functionality.
-//    - This allows the repository to perform operations like save, delete, update, and find without needing to implement these methods manually.
-//    - JpaRepository also includes features like pagination and sorting.
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-// Example: public interface PatientRepository extends JpaRepository<Patient, Long> {}
+import com.project.back_end.models.Patient;
 
-// 2. Custom Query Methods:
+/**
+ * Repository interface for performing database operations on {@link Patient} entities.
+ *
+ * <p>This interface extends {@link JpaRepository}, which provides built-in methods
+ * for common database operations such as save, findById, findAll, and delete —
+ * without any manual SQL.</p>
+ *
+ * <p>Spring Data JPA automatically creates a working implementation of this interface
+ * at runtime. Patient data is stored in the MySQL (relational) database.</p>
+ */
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-//    - **findByEmail**:
-//      - This method retrieves a Patient by their email address.
-//      - Return type: Patient
-//      - Parameters: String email
+    /**
+     * Finds a patient by their email address.
+     *
+     * <p>Spring Data JPA generates the query automatically from the method name.
+     * Used during patient login to look up the patient record by email.</p>
+     *
+     * @param email the patient's email address
+     * @return the {@link Patient} with the given email, or {@code null} if not found
+     */
+    Patient findByEmail(String email);
 
-//    - **findByEmailOrPhone**:
-//      - This method retrieves a Patient by either their email or phone number, allowing flexibility for the search.
-//      - Return type: Patient
-//      - Parameters: String email, String phone
-
-// 3. @Repository annotation:
-//    - The @Repository annotation marks this interface as a Spring Data JPA repository.
-//    - Spring Data JPA automatically implements this repository, providing the necessary CRUD functionality and custom queries defined in the interface.
-
-
+    /**
+     * Finds a patient by either their email address or phone number.
+     *
+     * <p>Used to check for duplicate registrations — to ensure that no two patients
+     * share the same email or phone number in the system.</p>
+     *
+     * @param email the email address to check
+     * @param phone the phone number to check
+     * @return the {@link Patient} matching either value, or {@code null} if none found
+     */
+    Patient findByEmailOrPhone(String email, String phone);
 }
-
