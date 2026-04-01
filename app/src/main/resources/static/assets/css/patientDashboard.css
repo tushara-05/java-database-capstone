@@ -1,14 +1,137 @@
-/* This is the style sheet for the patientDashboard.html */
-  .card-actions {
+/* patientDashboard.css - Style sheet for patientDashboard.html */
+
+/* Main Content Section */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-image: url("../images/defineRole/index.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Heading Styles */
+.main-content h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #003e3e;
+}
+
+/* Card Actions - for patient booking */
+.card-actions {
     background-color: #244557;
     padding: 10px;
     text-align: center;
-  }
+}
 
-  .card-actions:hover{
+.card-actions:hover {
     background-color: #1c3745;
-  }
-  .ripple-overlay {
+}
+
+/* Search Bar */
+.searchBar {
+    height: 40px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.searchBar:focus {
+    outline: none;
+    border-color: #015c5d;
+    box-shadow: 0 0 5px rgba(1, 92, 93, 0.697);
+}
+
+/* Filter Section */
+.filter-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+/* Filter Select Dropdown */
+.filter-select {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+.filter-select:focus {
+    border-color: #015c5d;
+    box-shadow: 0 0 5px rgba(1, 92, 93, 0.697);
+    outline: none;
+}
+
+/* Content Area for Doctor Cards */
+#content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(315px, 1fr));
+    gap: 40px;
+    padding: 20px;
+    position: relative;
+}
+
+/* Doctor Card Styles */
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: auto;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.doctor-card:hover {
+    transform: scale(1.02);
+}
+
+.doctor-info {
+    padding: 12px;
+    flex-grow: 1;
+}
+
+.doctor-info h3 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #015c5d;
+}
+
+.doctor-info p {
+    margin: 20px 0px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* No Results Message */
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 40px;
+}
+
+/* Ripple Animation for Booking */
+.ripple-overlay {
     position: fixed;
     width: 20px;
     height: 20px;
@@ -17,64 +140,107 @@
     z-index: 9999;
     transform: translate(-50%, -50%) scale(0);
     transition: transform 1s ease-out, opacity 1s ease;
-  }
-  
-  .ripple-overlay.active {
+}
+
+.ripple-overlay.active {
     transform: translate(-50%, -50%) scale(150);
     opacity: 1;
-  }
-  
-  .modalApp {
-    position: fixed;
-  bottom: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  background: #fff;
-  padding: 20px;
-  z-index: 10000;
-  transition: bottom 1.5s ease-in;
-  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 10px 10px 0 0;
-  text-align: center;
-  }
-  
-  .modalApp.active {
-    bottom: 0;
-  }
-  
-  .modalApp h2 {
-    margin-top: 20px;
-  }
-  
-  .modalApp input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 40px;
-  }
+}
 
-  .modalApp select {
+/* Booking Modal */
+.modalApp {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #fff;
+    padding: 20px;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modalApp.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modalApp h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modalApp input,
+.modalApp input.input-field {
     display: block;
     margin: 10px auto;
     padding: 10px;
     width: 90%;
-    margin-bottom: 40px;
-  }
-  
-  .confirm-booking {
+    margin-bottom: 15px;
+}
+
+.modalApp select,
+.modalApp select.input-field {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 90%;
+    margin-bottom: 15px;
+}
+
+.confirm-booking {
     padding: 10px 20px;
     background: #1c3745;
     color: #fff;
     border: none;
     cursor: pointer;
-    
-  
-    
-  }
-  .confirm-booking:hover {
+}
+
+.confirm-booking:hover {
     filter: brightness(1.2);
     background-color: #1c3745;
-  }
-  
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .searchBar {
+        max-width: 100%;
+    }
+
+    .doctor-card {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 20px;
+    }
+
+    .main-content h2 {
+        font-size: 24px;
+    }
+
+    #content {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}
