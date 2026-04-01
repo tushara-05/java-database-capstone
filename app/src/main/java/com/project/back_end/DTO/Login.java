@@ -1,30 +1,79 @@
 package com.project.back_end.DTO;
 
+/**
+ * Data Transfer Object (DTO) for handling login requests from users.
+ *
+ * <p>A DTO is a simple object used to carry data between the client (frontend)
+ * and the server without exposing the full entity models.</p>
+ *
+ * <p>This class is used when any user — Admin, Doctor, or Patient — attempts to log in.
+ * The login form sends an {@code identifier} (username or email) and a {@code password}.</p>
+ *
+ * <ul>
+ *   <li>For <b>Admin</b>: {@code identifier} is the admin's <b>username</b></li>
+ *   <li>For <b>Doctor</b> or <b>Patient</b>: {@code identifier} is their <b>email address</b></li>
+ * </ul>
+ */
 public class Login {
-    
-// 1. 'email' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the email address used for logging into the system.
-//      - The email field is expected to contain a valid email address for user authentication purposes.
 
-// 2. 'password' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the password associated with the email address.
-//      - The password field is used for verifying the user's identity during login.
-//      - It is generally hashed before being stored and compared during authentication.
+    /**
+     * The login identifier used to find the user in the system.
+     *
+     * <ul>
+     *   <li>For Admins: this is their username</li>
+     *   <li>For Doctors and Patients: this is their email address</li>
+     * </ul>
+     */
+    private String identifier;
 
-// 3. Constructor:
-//    - No explicit constructor is defined for this class, as it relies on the default constructor provided by Java.
-//    - This class can be initialized with setters or directly via reflection, as per the application's needs.
+    /**
+     * The password provided by the user during login.
+     * This is matched against the stored password to verify identity.
+     * Passwords should be kept secret and never exposed in responses.
+     */
+    private String password;
 
-// 4. Getters and Setters:
-//    - Standard getter and setter methods are provided for both 'email' and 'password' fields.
-//    - The 'getEmail()' method allows access to the email value.
-//    - The 'setEmail(String email)' method sets the email value.
-//    - The 'getPassword()' method allows access to the password value.
-//    - The 'setPassword(String password)' method sets the password value.
+    /**
+     * No-argument (default) constructor.
+     * Required for JSON deserialization — Spring uses this to create the object
+     * from the incoming JSON request body.
+     */
+    public Login() {
+    }
 
+    /**
+     * Returns the login identifier (username or email).
+     *
+     * @return the identifier string provided by the user
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
 
+    /**
+     * Sets the login identifier.
+     *
+     * @param identifier the username (for admin) or email (for doctor/patient)
+     */
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    /**
+     * Returns the password provided during login.
+     *
+     * @return the raw password string
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Sets the password for this login request.
+     *
+     * @param password the user's password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
